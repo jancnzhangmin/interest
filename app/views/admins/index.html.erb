@@ -1,0 +1,46 @@
+<%= render 'layerbegin' %>
+<div class="col-lg-12">
+  <div class="ibox float-e-margins">
+    <div class="ibox-title">
+      <h3>管理员</h3>
+    </div>
+    <div class="ibox-content">
+      <table class="table table-hover table-bordered text-center">
+        <thead>
+        <tr>
+          <th class="text-center">姓名</th>
+          <th class="text-center">账号</th>
+          <th class="text-center">状态</th>
+          <th class="text-center">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @admins.each do |admin| %>
+            <tr>
+              <td><%= admin.username %></td>
+              <td><%= admin.login %></td>
+              <td>
+                <% if admin.status==0 %>
+                锁定
+                    <% else %>
+                正常
+                <% end %>
+              </td>
+
+              <td><%= link_to '编辑',edit_admin_path(admin) %>
+                <% if admin.login != 'admin' %>
+                <%= link_to '删除', admin, method: :delete, data: { confirm: '确认删除?' } %>
+                    <% else %>
+                &nbsp;
+                    <% end %>
+                    </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <%= link_to "新增",new_admin_path,class: "btn btn-w-m btn-primary pull-right" %>
+      <br>
+    </div>
+  </div>
+</div>
+<%=render 'layerend' %>

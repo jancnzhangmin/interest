@@ -1,0 +1,36 @@
+<script>
+    $(document).ready(function(){
+        $.ajax( {
+            url:'getnodes',
+            type:'get',
+            dataType:'json',
+            success:function(data) {
+                $("#treeview").treeview({color:"#428bca",data:data,onNodeSelected:function(e,o){parent.$("#movefarmclaid").val(o.tags)}})
+            },
+            error : function() {
+            }
+        });
+
+        $('#selectnodesbtn').click(function(){
+           //parent.$('#movefarmclaid').val()
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            parent.layer.close(index);
+            window.parent.movenode();
+
+        });
+
+    });
+</script>
+<div class="ibox float-e-margins">
+  <div class="ibox-content col-md-12">
+    <div class="ibox-title">
+      <h3>请选择分类</h3>
+    </div>
+    <div class="ibox-content">
+      <div id="treeview" class="test"></div>
+    </div>
+    <div class="text-center">
+    <button class="btn btn-primary" type="button" id="selectnodesbtn">确定</button>
+    </div>
+  </div>
+</div>

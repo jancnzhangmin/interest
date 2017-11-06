@@ -1,0 +1,35 @@
+<script>
+  $(document).ready(function(){
+     $('#clainput').val(window.parent.$('#farmclacla').val());
+      $('#smt').click(function(){
+
+          window.parent.$('#farmclacla').val($('#clainput').val());
+          window.parent.edit();
+          var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+          parent.layer.close(index);
+      });
+  });
+</script>
+
+<div class="ibox-content form-horizontal m-t" style="margin-bottom:0px;margin-top: 0px;">
+  <br>
+  <div class="form-group">
+
+        <div class="form-group">
+          <label class="col-sm-3 control-label">分类：</label>
+          <div class="col-sm-5">
+
+            <input class="form-control" id="clainput">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label"></label>
+          <div class="col-sm-5 text-right">
+
+            <button class="btn btn-w-m btn-primary" id="smt">确定</button>
+          </div>
+        </div>
+
+  </div>
+</div>
+    </div>

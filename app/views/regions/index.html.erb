@@ -1,0 +1,288 @@
+<script>
+    $(document).ready(function(){
+
+init();
+
+        $('#addnodes').click(function(){
+            if($('#addclainput').val()==''){
+
+                toastr.error('请输入有效的分类名称');
+                return;
+            }
+            $.ajax( {
+                url:'regions/updatenodes',
+                type:'get',
+                dataType:'json',
+                data:{
+                    way:'add',
+                    selfid:$('#farmclaid').val(),
+                    region:$('#addclainput').val()
+                },
+                success:function(data) {
+                    init();
+                },
+                error : function() {
+
+                }
+            });
+        });
+
+        $('#chnodes').click(function(){
+
+            if($('#chclainput').val()==''){
+
+                toastr.error('请输入有效的分类名称');
+                return;
+            }
+            $.ajax( {
+                url:'regions/updatenodes',
+                type:'get',
+                dataType:'json',
+                data:{
+                    way:'ch',
+                    selfid:$('#farmclaid').val(),
+                    region:$('#chclainput').val()
+                },
+                success:function(data) {
+                    init();
+                },
+                error : function() {
+
+                }
+            });
+        });
+
+        $('#upbtn').click(function(){
+
+            if($('#farmclaid').val()==''){
+
+                toastr.error('请选择需要操作的节点');
+                return;
+            }
+
+            $.ajax( {
+                url:'regions/updatenodes',
+                type:'get',
+                dataType:'json',
+                data:{
+                    way:'up',
+                    selfid:$('#farmclaid').val()
+
+                },
+                success:function(data) {
+                    init();
+                },
+                error : function() {
+
+                }
+            });
+
+        });
+
+        $('#delbtn').click(function(){
+
+            if($('#farmclaid').val()==''){
+
+                toastr.error('请选择需要操作的节点');
+                return;
+            }
+
+            $.ajax( {
+                url:'regions/updatenodes',
+                type:'get',
+                dataType:'json',
+                data:{
+                    way:'del',
+                    selfid:$('#farmclaid').val()
+
+                },
+                success:function(data) {
+                    init();
+                },
+                error : function() {
+
+                }
+            });
+
+        });
+
+        $('#downbtn').click(function(){
+            if($('#farmclaid').val()==''){
+
+                toastr.error('请选择需要操作的节点');
+                return;
+            }
+            layer.open({
+                type: 2,
+                title: ' ',
+                maxmin: true,
+                shadeClose: true, //点击遮罩关闭层
+                area : ['800px' , '520px'],
+                content: 'regions/shownodes'
+            });
+
+        });
+
+        $('#editbtn').click(function(){
+            if($('#farmclaid').val()==''){
+
+                toastr.error('请选择需要操作的节点');
+                return;
+            }
+            layer.open({
+                type: 2,
+                title: ' ',
+                maxmin: true,
+                shadeClose: true, //点击遮罩关闭层
+                area : ['800px' , '215px'],
+                content: 'regions/showedit'
+            });
+
+        });
+
+
+    });
+    function movenode(){
+        $.ajax( {
+            url:'regions/updatenodes',
+            type:'get',
+            dataType:'json',
+            data:{
+                way:'down',
+                selfid:$('#farmclaid').val(),
+                moveto:$('#movefarmclaid').val()
+
+            },
+            success:function(data) {
+                init();
+            },
+            error : function() {
+
+            }
+        });
+    }
+
+    function edit(){
+        $.ajax( {
+            url:'regions/updatenodes',
+            type:'get',
+            dataType:'json',
+            data:{
+                way:'edit',
+                selfid:$('#farmclaid').val(),
+                region:$('#farmclacla').val()
+
+            },
+            success:function(data) {
+                init();
+            },
+            error : function() {
+
+            }
+        });
+    }
+
+        function init(){
+            $.ajax( {
+                url:'regions/getnodes',
+                type:'get',
+                dataType:'json',
+                success:function(data) {
+                    $("#treeview").treeview({color:"#428bca",data:data,onNodeSelected:function(e,o){$("#farmclaid").val(o.tags),$('#farmclacla').val(o.text)}})
+
+                },
+                error : function() {
+
+                }
+            });
+        }
+
+</script>
+<%= render 'layerbegin' %>
+<div class="col-lg-12">
+  <div class="ibox float-e-margins">
+    <div class="ibox-content col-md-12">
+      <div class="ibox-title">
+        <h3>区域</h3>
+      </div>
+      <div class="ibox-content">
+        <div class="text-right col-md-12">
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseclaadd" aria-expanded="false" aria-controls="collapseExample">
+            新增区域
+          </button>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseclach" aria-expanded="false" aria-controls="collapseExample">
+            新增子区域
+          </button>
+        </div>
+        <div class="col-md-6">
+
+          <div class="ibox-title">
+            <h5></h5>
+            <div class="ibox-tools">
+              <button class="btn btn-primary" id="upbtn"><i class="fa fa-long-arrow-left"></i></button>
+              <button class="btn btn-primary" id="downbtn"><i class="fa fa-long-arrow-right"></i></button>
+              <button class="btn btn-primary" id="editbtn"><i class="fa fa-edit"></i></button>
+              <button class="btn btn-primary" id="delbtn"><i class="fa fa-trash"></i></button>
+
+            </div>
+          </div>
+
+          <div class="ibox-content">
+          <div id="treeview" class="test"></div>
+            </div>
+          <input id="farmclaid" type="hidden" >
+          <input id="movefarmclaid" type="hidden" >
+          <input id="farmclacla" type="hidden" >
+        </div>
+
+        <div class="col-md-6">
+
+          <div id="collapseclaadd" class="collapse well">
+            <div class="form-group" >
+              <label class="col-sm-3 control-label">分类：</label>
+              <div class="col-sm-8">
+                <input class="form-control" id="addclainput">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label"></label>
+              <div class="col-sm-8 text-right">
+                <br>
+                <button class="btn btn-primary" type="button" id="addnodes">确定</button>
+                &nbsp;
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseclaadd" aria-expanded="false" aria-controls="collapseExample">
+                  取消
+                </button>
+              </div>
+            </div>
+            <br><br><br><br>
+          </div>
+
+          <div id="collapseclach" class="collapse well">
+            <div class="form-group" >
+              <label class="col-sm-3 control-label">子类：</label>
+              <div class="col-sm-8">
+                <input class="form-control" id="chclainput">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label"></label>
+              <div class="col-sm-8 text-right">
+                <br>
+                <button class="btn btn-primary" type="button" id="chnodes">确定</button>
+                &nbsp;
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseclach" aria-expanded="false" aria-controls="collapseExample">
+                  取消
+                </button>
+              </div>
+            </div>
+            <br><br><br><br>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<%=render 'layerend' %>
