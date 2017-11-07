@@ -27,7 +27,21 @@
 
 
 
-
+        <li data-turbolinks="false">
+          <a href="">
+            <i class="fa fa-bars"></i>
+            <span class="nav-label">用户</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level">
+            <li>
+              <%= link_to '区域',regions_path,'data-no-turbolink'=>true%>
+            </li>
+            <li>
+              <%= link_to '用户',users_path,'data-no-turbolink'=>true%>
+            </li>
+          </ul>
+        </li>
 
         <li data-turbolinks="false">
           <a href="">
@@ -38,6 +52,9 @@
           <ul class="nav nav-second-level">
             <li>
               <%= link_to '管理员',admins_path,'data-no-turbolink'=>true%>
+            </li>
+            <li>
+              <%= link_to '存息版本',interestversions_path,'data-no-turbolink'=>true%>
             </li>
           </ul>
         </li>

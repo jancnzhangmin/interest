@@ -13,4 +13,10 @@ Rails.application.routes.draw do
       get 'showedit'
     end
   end
+  resources :users do
+    collection do
+      get 'getregion'
+    end
+  end
+  resources :interestversions
 end

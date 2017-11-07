@@ -28,13 +28,12 @@
 //= require plugins/slimscroll/jquery.slimscroll.min.js
 //= require plugins/datapicker/bootstrap-datepicker.js
 //= require plugins/iCheck/icheck.min.js
-//= require plugins/layer/layer.min.js
+//= require plugins/layer/layer.js
 //= require plugins/switchery/switchery.js
 //= require toastr.min.js
 //= require jquery.PrintArea.js
 //= require plugins/fancybox/jquery.fancybox.js
 //= require plugins/echarts/echarts-all.js
 //= require jquery.jqprint-0.3.js
-//= require plugins/validate/jquery.validate.min.js
 //= require plugins/treeview/bootstrap-treeview.js
 

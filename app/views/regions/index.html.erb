@@ -19,6 +19,8 @@ init();
                     region:$('#addclainput').val()
                 },
                 success:function(data) {
+                    $('#addclainput').val('');
+                    $('#collapseclaadd').collapse('toggle');
                     init();
                 },
                 error : function() {
@@ -44,6 +46,8 @@ init();
                     region:$('#chclainput').val()
                 },
                 success:function(data) {
+                    $('#chclainput').val('');
+                    $('#collapseclach').collapse('toggle');
                     init();
                 },
                 error : function() {
@@ -207,6 +211,7 @@ init();
       </div>
       <div class="ibox-content">
         <div class="text-right col-md-12">
+
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseclaadd" aria-expanded="false" aria-controls="collapseExample">
             新增区域
           </button>
@@ -215,17 +220,13 @@ init();
           </button>
         </div>
         <div class="col-md-6">
-
-          <div class="ibox-title">
-            <h5></h5>
             <div class="ibox-tools">
               <button class="btn btn-primary" id="upbtn"><i class="fa fa-long-arrow-left"></i></button>
               <button class="btn btn-primary" id="downbtn"><i class="fa fa-long-arrow-right"></i></button>
               <button class="btn btn-primary" id="editbtn"><i class="fa fa-edit"></i></button>
               <button class="btn btn-primary" id="delbtn"><i class="fa fa-trash"></i></button>
-
             </div>
-          </div>
+
 
           <div class="ibox-content">
           <div id="treeview" class="test"></div>
@@ -239,7 +240,7 @@ init();
 
           <div id="collapseclaadd" class="collapse well">
             <div class="form-group" >
-              <label class="col-sm-3 control-label">分类：</label>
+              <label class="col-sm-3 control-label">区域：</label>
               <div class="col-sm-8">
                 <input class="form-control" id="addclainput">
               </div>
@@ -248,7 +249,7 @@ init();
               <label class="col-sm-3 control-label"></label>
               <div class="col-sm-8 text-right">
                 <br>
-                <button class="btn btn-primary" type="button" id="addnodes">确定</button>
+                <button class="btn btn-primary" type="button" id="addnodes" adata-toggle="collapse" data-target="#collapseclaadd" aria-expanded="false" aria-controls="collapseclaadd">确定</button>
                 &nbsp;
                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseclaadd" aria-expanded="false" aria-controls="collapseExample">
                   取消
@@ -260,7 +261,7 @@ init();
 
           <div id="collapseclach" class="collapse well">
             <div class="form-group" >
-              <label class="col-sm-3 control-label">子类：</label>
+              <label class="col-sm-3 control-label">子区域：</label>
               <div class="col-sm-8">
                 <input class="form-control" id="chclainput">
               </div>

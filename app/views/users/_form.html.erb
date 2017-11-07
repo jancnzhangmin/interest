@@ -1,0 +1,114 @@
+<script>
+    $(document).ready(function(){
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green'
+        });
+
+        $('#selectarea1').change(function(){
+            $('#regionid').val($(this).val());
+            $.ajax( {
+                url:'getregion',
+                type:'get',
+                dataType:'json',
+                data:{
+                    selfid:$('#regionid').val()
+                },
+                success:function(data) {
+                    $("#selectarea2 option").remove();
+                    if(data.length>0){
+                        $("#selectarea2").append("<option value='0'>------</option>");
+                        $.each(data,function(i,item){
+                            $("#selectarea2").append("<option value="+item.id+">"+item.region+"</option>");
+                        });
+                    }
+                },
+                error : function() {
+
+                }
+            });
+        });
+
+    });
+
+</script>
+<style>
+  .display{
+      display:block;
+  }
+        .displaynone{
+            display: none;
+        }
+</style>
+<div class="col-md-12 ibox ibox-content">
+  <div class="ibox-content form-horizontal m-t">
+    <div class="form-group">
+      <%= form_for(@user,:html => {:class=>'form-horizontal m-t',:multipart => true}) do |f| %>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">姓名：</label>
+            <div class="col-sm-5">
+              <%= f.text_field :username,class:"form-control" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">性别：</label>
+            <div class="col-sm-5">
+              <%= f.text_field :address,class:"form-control" %>
+              <div class="radio i-checks col-sm-3">
+                <label>
+                  <input type="radio" value="option1" name="sex"> <i></i> 男</label>
+              </div>
+              <div class="radio i-checks col-sm-3">
+                <label>
+                  <input type="radio" checked="" value="option2" name="sex"> <i></i> 女</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">区域：</label>
+            <div class="col-sm-5">
+              <%= f.text_field :region_id,class:"form-control", id:'regionid' %>
+              <div class="col-sm-3">
+              <select class="form-control" id="selectarea1">
+                <option value=0>------</option>
+                <% @regions.each do |region| %>
+                    <option value=<%= region.id %> ><%= region.region %></option>
+                <% end %>
+              </select>
+              </div>
+              <div class="col-sm-3">
+              <select class="form-control" id="selectarea2">
+                <option value=0>------</option>
+                <% @regions.each do |region| %>
+                    <option value=<%= region.id %> ><%= region.region %></option>
+                <% end %>
+              </select>
+              </div>
+              <div class="col-sm-3">
+                <select class="form-control" id="selectarea3">
+                  <option value=0>------</option>
+                  <% @regions.each do |region| %>
+                      <option value=<%= region.id %> ><%= region.region %></option>
+                  <% end %>
+                </select>
+              </div>
+              <div class="col-sm-3">
+                <select class="form-control" id="selectarea4">
+                  <option value=0>------</option>
+                  <% @regions.each do |region| %>
+                      <option value=<%= region.id %> ><%= region.region %></option>
+                  <% end %>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"></label>
+            <div class="col-sm-5 text-right">
+              <%= f.submit '确定',class: "btn btn-w-m btn-primary ",id:'smt' %>&nbsp;<%= link_to "返回",users_path,class: "btn btn-w-m btn-primary " %>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

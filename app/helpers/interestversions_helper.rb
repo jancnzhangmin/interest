@@ -1,0 +1,2 @@
+module InterestversionsHelper
+end

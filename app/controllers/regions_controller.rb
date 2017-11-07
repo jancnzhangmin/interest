@@ -19,7 +19,7 @@ class RegionsController < ApplicationController
     regions.each do |f|
       if f.up_id.to_s== "0" || f.up_id.to_s == ""
         regionclass = Regionclass.new
-        regionclass.text = f.cla
+        regionclass.text = f.region
         regionclass.tags = f.id
         if f.childrens.count >0
           regionclass.nodes = createnodes(f.childrens)
@@ -40,7 +40,7 @@ class RegionsController < ApplicationController
         if region.parent
           Region.create(region:params[:region],up_id:region.parent.id)
         else
-          Region.create(region:params[:region],up_id:0)
+          Region.create(region:params[:region])
         end
       else
         Region.create(region:params[:region])
@@ -93,7 +93,7 @@ class RegionsController < ApplicationController
   def createnodes(regions)
     regionarr = Array.new
     regions.each do |f|
-      regionclass = Farmclass.new
+      regionclass = Regionclass.new
       regionclass.text = f.region
       regionclass.tags = f.id
       if f.childrens.count>0
