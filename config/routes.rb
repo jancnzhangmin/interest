@@ -16,7 +16,14 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       get 'getregion'
+      get 'getregionparent'
+      get 'in'
+      get 'getregionall'
     end
+    resources :deposits
+    resources :takeouts
+    resources :cards
   end
   resources :interestversions
+  resources :deposittypedefs
 end

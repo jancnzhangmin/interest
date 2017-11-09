@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171107014223) do
+ActiveRecord::Schema.define(version: 20171109033220) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "username"
@@ -20,6 +20,40 @@ ActiveRecord::Schema.define(version: 20171107014223) do
     t.integer  "status"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+  end
+
+  create_table "capitals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.float    "capital",    limit: 24
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  create_table "cards", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "bankdeposit"
+    t.string   "bankaccount"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "deposits", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "deposittypedef_id"
+    t.integer  "user_id"
+    t.string   "ordernumber"
+    t.float    "amount",            limit: 24
+    t.integer  "red"
+    t.integer  "redid"
+    t.text     "content",           limit: 65535
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  create_table "deposittypedefs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "depostitype"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "interestversions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -36,6 +70,17 @@ ActiveRecord::Schema.define(version: 20171107014223) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "takeouts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.string   "ordernumber"
+    t.float    "amount",      limit: 24
+    t.integer  "red"
+    t.integer  "redid"
+    t.text     "content",     limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "region_id"
     t.integer  "interestversion_id"
@@ -46,6 +91,7 @@ ActiveRecord::Schema.define(version: 20171107014223) do
     t.text     "content",            limit: 65535
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.float    "capital",            limit: 24
   end
 
 end

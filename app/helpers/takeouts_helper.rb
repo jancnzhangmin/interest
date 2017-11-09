@@ -1,0 +1,2 @@
+module TakeoutsHelper
+end

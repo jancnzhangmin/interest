@@ -36,4 +36,5 @@
 //= require plugins/echarts/echarts-all.js
 //= require jquery.jqprint-0.3.js
 //= require plugins/treeview/bootstrap-treeview.js
+//= require ChinaNumToEnglishNum.js
 

@@ -5,10 +5,15 @@
             radioClass: 'iradio_square-green'
         });
 
+        var url= 'getregion';
+        if($('#interestversionid').val()!=''){
+            url= '../getregion';
+        }
+
         $('#selectarea1').change(function(){
             $('#regionid').val($(this).val());
             $.ajax( {
-                url:'getregion',
+                url:url,
                 type:'get',
                 dataType:'json',
                 data:{
@@ -21,6 +26,15 @@
                         $.each(data,function(i,item){
                             $("#selectarea2").append("<option value="+item.id+">"+item.region+"</option>");
                         });
+                        $('#selectarea2').removeClass('displaynone');
+                        $('#selectarea2').addClass('display');
+                    }else{
+                        $('#selectarea2').removeClass('display');
+                        $('#selectarea2').addClass('displaynone');
+                        $('#selectarea3').removeClass('display');
+                        $('#selectarea3').addClass('displaynone');
+                        $('#selectarea4').removeClass('display');
+                        $('#selectarea4').addClass('displaynone');
                     }
                 },
                 error : function() {
@@ -29,21 +43,246 @@
             });
         });
 
+        $('#selectarea2').change(function(){
+            $('#regionid').val($(this).val());
+            $.ajax( {
+                url:url,
+                type:'get',
+                dataType:'json',
+                data:{
+                    selfid:$('#regionid').val()
+                },
+                success:function(data) {
+                    $("#selectarea3 option").remove();
+                    if(data.length>0){
+                        $("#selectarea3").append("<option value='0'>------</option>");
+                        $.each(data,function(i,item){
+                            $("#selectarea3").append("<option value="+item.id+">"+item.region+"</option>");
+                        });
+                        $('#selectarea3').removeClass('displaynone');
+                        $('#selectarea3').addClass('display');
+                    }else{
+                        $('#selectarea3').removeClass('display');
+                        $('#selectarea3').addClass('displaynone');
+                        $('#selectarea4').removeClass('display');
+                        $('#selectarea4').addClass('displaynone');
+                    }
+                },
+                error : function() {
+
+                }
+            });
+        });
+
+        $('#selectarea3').change(function(){
+            $('#regionid').val($(this).val());
+            $.ajax( {
+                url:url,
+                type:'get',
+                dataType:'json',
+                data:{
+                    selfid:$('#regionid').val()
+                },
+                success:function(data) {
+                    $("#selectarea4 option").remove();
+                    if(data.length>0){
+                        $("#selectarea4").append("<option value='0'>------</option>");
+                        $.each(data,function(i,item){
+                            $("#selectarea4").append("<option value="+item.id+">"+item.region+"</option>");
+                        });
+                        $('#selectarea4').removeClass('displaynone');
+                        $('#selectarea4').addClass('display');
+                    }else{
+                        $('#selectarea4').removeClass('display');
+                        $('#selectarea4').addClass('displaynone');
+                    }
+                },
+                error : function() {
+
+                }
+            });
+        });
+
+        $('#selectarea4').change(function(){
+            $('#regionid').val($(this).val());
+        });
+
+
+        $('#sex').on('ifChecked', function(event){
+            $('#sexid').val(0);
+        });
+
+        $('#sex').on('ifUnchecked', function(event){
+            $('#sexid').val(1);
+        });
+
+        $('#selectinterestversion').change(function(){
+            $('#interestversion').val($(this).val());
+        });
+
+
+        $("#userform").validate({
+            debug:false, //调试模式，即使验证成功也不会跳转到目标页面
+            onkeyup:null, //当丢失焦点时才触发验证请求
+            rules:{     //配置验证规则，key就是被验证的dom对象，value就是调用验证的方法(也是json格式)
+                'user[username]':{
+                    required:true //必填。如果验证方法不需要参数，则配置为true
+                },
+                'user[region_id]':{
+                    required:true
+                },
+                'user[interestversion_id]':{
+                    required:true
+                }
+
+            },
+            messages:{
+                'user[username]':{
+                    required:"姓名不能为空"
+                },
+                'user[region_id]':{
+                    required:"区域不能为空"
+                },
+                'user[interestversion_id]':{
+                    required:"日息版本不能为空"
+                }
+            }
+        });
+
+
+
+        getregionparent($('#regionid').val());
+        //debugger;
+        function getregionparent(regionid) {
+            //debugger;
+            if (regionid != '') {
+                $('#teminterestid').val($('#teminterestid').val()+regionid+':');
+                $.ajax({
+                    url: '../getregionparent',
+                    type: 'get',
+                    dataType: 'json',
+                    data: {
+                        selfid: regionid
+                    },
+                    success: function (data) {
+                        //debugger;
+                        if (data) {
+                            getregionparent(data.id);
+                        }else{
+                            var arr = $('#teminterestid').val().split(':');
+                            arr.reverse();
+                            if(arr[1]){
+                                $('#selectarea1').val(arr[1]);
+
+                            }
+                            if(arr[2]){
+                                $.ajax( {
+                                    url:url,
+                                    type:'get',
+                                    dataType:'json',
+                                    data:{
+                                        selfid:arr[1]
+                                    },
+                                    success:function(data) {
+                                        $("#selectarea2 option").remove();
+                                        if(data.length>0){
+                                            $("#selectarea2").append("<option value='0'>------</option>");
+                                            $.each(data,function(i,item){
+                                                $("#selectarea2").append("<option value="+item.id+">"+item.region+"</option>");
+                                            });
+                                            $('#selectarea2').val(arr[2]);
+                                            $('#selectarea2').removeClass('displaynone');
+                                            $('#selectarea2').addClass('display');
+                                        }
+                                    },
+                                    error : function() {
+
+                                    }
+                                });
+                            }
+                            if(arr[3]){
+                                $.ajax( {
+                                    url:url,
+                                    type:'get',
+                                    dataType:'json',
+                                    data:{
+                                        selfid:arr[2]
+                                    },
+                                    success:function(data) {
+                                        $("#selectarea3 option").remove();
+                                        if(data.length>0){
+                                            $("#selectarea3").append("<option value='0'>------</option>");
+                                            $.each(data,function(i,item){
+                                                $("#selectarea3").append("<option value="+item.id+">"+item.region+"</option>");
+                                            });
+                                            $('#selectarea3').val(arr[3]);
+                                            $('#selectarea3').removeClass('displaynone');
+                                            $('#selectarea3').addClass('display');
+                                        }
+                                    },
+                                    error : function() {
+
+                                    }
+                                });
+                            }
+                            if(arr[4]){
+                                $.ajax( {
+                                    url:url,
+                                    type:'get',
+                                    dataType:'json',
+                                    data:{
+                                        selfid:arr[3]
+                                    },
+                                    success:function(data) {
+                                        $("#selectarea4 option").remove();
+                                        if(data.length>0){
+                                            $("#selectarea4").append("<option value='0'>------</option>");
+                                            $.each(data,function(i,item){
+                                                $("#selectarea3").append("<option value="+item.id+">"+item.region+"</option>");
+                                            });
+                                            $('#selectarea4').val(arr[4]);
+                                            $('#selectarea4').removeClass('displaynone');
+                                            $('#selectarea4').addClass('display');
+                                        }
+                                    },
+                                    error : function() {
+
+                                    }
+                                });
+                            }
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            }
+        }
+
+        if($('#interestversion').val()!=''){
+            $('#selectinterestversion').val($('#interestversion').val());
+        }
+        if($('#sexid').val()=='1'){
+            $('#sexm').iCheck('check');
+        }
+
+
     });
 
 </script>
 <style>
-  .display{
-      display:block;
-  }
-        .displaynone{
-            display: none;
-        }
+    .display{
+        display:block;
+    }
+    .displaynone{
+        display: none;
+    }
 </style>
 <div class="col-md-12 ibox ibox-content">
   <div class="ibox-content form-horizontal m-t">
+    <input type="hidden" id="teminterestid">
     <div class="form-group">
-      <%= form_for(@user,:html => {:class=>'form-horizontal m-t',:multipart => true}) do |f| %>
+      <%= form_for(@user,:html => {:class=>'form-horizontal m-t',:multipart => true,:id=>'userform'}) do |f| %>
+          <%= f.hidden_field :id,id:'interestversionid' %>
           <div class="form-group">
             <label class="col-sm-3 control-label">姓名：</label>
             <div class="col-sm-5">
@@ -53,39 +292,27 @@
           <div class="form-group">
             <label class="col-sm-3 control-label">性别：</label>
             <div class="col-sm-5">
-              <%= f.text_field :address,class:"form-control" %>
+              <% if @user.sex %>
+                  <%= f.hidden_field :sex,class:"form-control",value:@user.sex, id:'sexid'%>
+              <% else %>
+                  <%= f.hidden_field :sex,class:"form-control",value:0,id:'sexid'%>
+              <% end %>
               <div class="radio i-checks col-sm-3">
                 <label>
-                  <input type="radio" value="option1" name="sex"> <i></i> 男</label>
+                  <input type="radio" checked=""  name="s"  id="sex"> <i></i> 男</label>
               </div>
               <div class="radio i-checks col-sm-3">
                 <label>
-                  <input type="radio" checked="" value="option2" name="sex"> <i></i> 女</label>
+                  <input type="radio"  name="s" id="sexm"> <i></i> 女</label>
               </div>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">区域：</label>
             <div class="col-sm-5">
-              <%= f.text_field :region_id,class:"form-control", id:'regionid' %>
+              <%= f.hidden_field :region_id,class:"form-control", id:'regionid' %>
               <div class="col-sm-3">
-              <select class="form-control" id="selectarea1">
-                <option value=0>------</option>
-                <% @regions.each do |region| %>
-                    <option value=<%= region.id %> ><%= region.region %></option>
-                <% end %>
-              </select>
-              </div>
-              <div class="col-sm-3">
-              <select class="form-control" id="selectarea2">
-                <option value=0>------</option>
-                <% @regions.each do |region| %>
-                    <option value=<%= region.id %> ><%= region.region %></option>
-                <% end %>
-              </select>
-              </div>
-              <div class="col-sm-3">
-                <select class="form-control" id="selectarea3">
+                <select class="form-control" id="selectarea1">
                   <option value=0>------</option>
                   <% @regions.each do |region| %>
                       <option value=<%= region.id %> ><%= region.region %></option>
@@ -93,13 +320,59 @@
                 </select>
               </div>
               <div class="col-sm-3">
-                <select class="form-control" id="selectarea4">
+                <select class="form-control displaynone" id="selectarea2">
                   <option value=0>------</option>
                   <% @regions.each do |region| %>
                       <option value=<%= region.id %> ><%= region.region %></option>
                   <% end %>
                 </select>
               </div>
+              <div class="col-sm-3">
+                <select class="form-control displaynone" id="selectarea3">
+                  <option value=0>------</option>
+                  <% @regions.each do |region| %>
+                      <option value=<%= region.id %> ><%= region.region %></option>
+                  <% end %>
+                </select>
+              </div>
+              <div class="col-sm-3">
+                <select class="form-control displaynone" id="selectarea4">
+                  <option value=0>------</option>
+                  <% @regions.each do |region| %>
+                      <option value=<%= region.id %> ><%= region.region %></option>
+                  <% end %>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">日息：</label>
+            <div class="col-sm-5">
+              <%= f.hidden_field :interestversion_id,class:"form-control",id:'interestversion' %>
+              <select class="form-control" id="selectinterestversion">
+                <option value=0>请选择日息版本</option>
+                <% @interestversions.each do |interestversion| %>
+                    <option value=<%= interestversion.id %> ><%= interestversion.name %>|<%= interestversion.rate %></option>
+                <% end %>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">详细地址：</label>
+            <div class="col-sm-5">
+              <%= f.text_field :address,class:"form-control" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">电话：</label>
+            <div class="col-sm-5">
+              <%= f.text_field :tel,class:"form-control" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">备注：</label>
+            <div class="col-sm-5">
+              <%= f.text_area :content,class:"form-control" %>
             </div>
           </div>
           <div class="form-group">

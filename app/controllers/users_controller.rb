@@ -3,21 +3,58 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   def index
     @users = User.all
+    @userarr=Array.new
+    @users.each do |f|
+      usercla = Userclass.new
+      usercla.id = f.id
+      usercla.region_id=f.region_id
+      usercla.interestversion = f.interestversion.name
+      usercla.username=f.username
+      if f.sex == 0
+        usercla.sex = '男'
+      else
+        usercla.sex='女'
+      end
+      usercla.address=getregiont('',f.region_id)+f.address
+      usercla.tel=f.tel
+      usercla.content=f.content
+      usercla.capital=f.capital
+      @userarr.push(usercla)
+    end
+  end
+
+  class Userclass
+    attr :id,true
+    attr :region_id,true
+    attr :interestversion,true
+    attr :username,true
+    attr :sex,true
+    attr :address,true
+    attr :tel,true
+    attr :content,true
+    attr :capital,true
   end
 
   def edit
     @user = User.find(params[:id])
+    @regions = Region.where('up_id =? or up_id is null','0')
+    @interestversions = Interestversion.all
   end
 
   def new
     @user = User.new
     @regions = Region.where('up_id =? or up_id is null','0')
+    @interestversions = Interestversion.all
   end
 
   def create
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
+        if @user.capital.to_s ==''
+          @user.capital = 0
+          @user.save
+        end
         format.html { redirect_to users_path, notice: 'User was successfully created.' }
       else
         format.html { render :new }
@@ -45,9 +82,30 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+    @depositcount = @user.deposits.where('redid is null or redid = 0').count
+    red=@user.deposits.where('redid > 0').count
+    @depositcount=@depositcount-red*2
+    @cardcount = @user.cards.count
+  end
+
   def getregion
     region = Region.find(params[:selfid]).childrens
     render json: region.to_json
+  end
+
+  def getregionparent
+    region = Region.find(params[:selfid]).parent
+    render json: region.to_json
+  end
+
+  def in
+
+  end
+
+  def getregionall
+    regionstr = getregiont('',params[:regionid]) + User.find(params[:userid]).address
+    render json: regionstr.to_json
   end
 
   private
@@ -58,7 +116,21 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:region_id ,:reterestversion_id,:username, :sex, :address, :tel, :content)
+    params.require(:user).permit(:region_id ,:interestversion_id,:username, :sex, :address, :tel, :content, :capital)
+  end
+
+  def getregiont(regionstr,id)
+    region = Region.find(id)
+    if region
+      regionstr=region.region+regionstr
+      if region.parent
+        getregiont(regionstr,region.parent.id)
+      else
+        return regionstr
+      end
+    else
+      return ''
+    end
   end
 
 end
