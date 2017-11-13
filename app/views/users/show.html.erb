@@ -83,7 +83,7 @@
                 </div>
             <% end %>
 
-            <%= link_to  new_user_deposit_path(@user) do %>
+            <%= link_to  user_takeouts_path(@user) do %>
                 <div class="col-sm-2">
                   <div class="widget style1 navy-bg">
                     <div class="row">
@@ -114,6 +114,23 @@
                   </div>
                 </div>
             <% end %>
+
+            <%= link_to  user_srelations_path(@user) do %>
+                <div class="col-sm-2">
+                  <div class="widget style1 navy-bg">
+                    <div class="row">
+                      <div class="col-xs-3">
+                        <i class="fa fa fa-users fa-3x"></i>
+                      </div>
+                      <div class="col-xs-8 text-right">
+                        <span> 社会关系 </span>
+                        <h3 class="font-bold"><%=@cardcount %>个</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            <% end %>
+
           </div>
         </div>
       </div>

@@ -1,0 +1,2 @@
+class RelationdefsController < ApplicationController
+end

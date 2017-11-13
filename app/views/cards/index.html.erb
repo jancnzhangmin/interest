@@ -21,7 +21,7 @@
               <td><%= card.name %></td>
               <td><%= card.bankdeposit %></td>
               <td><%= card.bankaccount %></td>
-              <td>
+
               <td><%= link_to '编辑',edit_user_card_path(@user,card) %>
                     <%= link_to '删除', [@user,card], method: :delete, data: { confirm: '确认删除?' } %>
               </td>

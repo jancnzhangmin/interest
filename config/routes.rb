@@ -23,7 +23,9 @@ Rails.application.routes.draw do
     resources :deposits
     resources :takeouts
     resources :cards
+    resources :srelations
   end
   resources :interestversions
   resources :deposittypedefs
+  resources :relationdefs
 end

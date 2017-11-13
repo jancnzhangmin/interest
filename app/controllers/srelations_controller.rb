@@ -1,0 +1,2 @@
+class SrelationsController < ApplicationController
+end
