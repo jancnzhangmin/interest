@@ -1,0 +1,33 @@
+<%= render 'layerbegin' %>
+<div class="col-lg-12">
+  <div class="ibox float-e-margins">
+    <div class="ibox-title">
+      <h3>社会关系定义</h3>
+    </div>
+    <div class="ibox-content">
+      <table class="table table-hover table-bordered text-center">
+        <thead>
+        <tr>
+          <th class="text-center">关系</th>
+          <th class="text-center">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @relationdefs.each do |relation| %>
+            <tr>
+              <td><%= relation.relation %></td>
+              <td>
+                <%= link_to '编辑',edit_relationdef_path(relation) %>
+                <%= link_to '删除', relation, method: :delete, data: { confirm: '确认删除?' } %>
+
+                    </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <%= link_to "新增",new_relationdef_path,class: "btn btn-w-m btn-primary pull-right" %>
+      <br>
+    </div>
+  </div>
+</div>
+<%=render 'layerend' %>

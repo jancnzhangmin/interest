@@ -1,0 +1,63 @@
+<script>
+    $(document).ready(function() {
+        $('#selectrelationdef').change(function () {
+            $('#relationdef').val($(this).val());
+        });
+        if($('#relationdef').val()!=''){
+            $('#selectrelationdef').val($('#relationdef').val());
+        }
+    });
+</script>
+<div class="col-md-12 ibox ibox-content">
+  <div class="ibox-content form-horizontal m-t">
+    <div class="form-group">
+      <%= form_for([@user,@srelation],:html => {:class=>'form-horizontal m-t',:multipart => true}) do |f| %>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">名称：</label>
+            <div class="col-sm-5">
+              <%= f.text_field :name,class:"form-control" %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">关系：</label>
+            <div class="col-sm-5">
+              <%= f.hidden_field :relationdef_id,class:"form-control",id:'relationdef' %>
+              <select class="form-control" id="selectrelationdef">
+                <option value=0>请选择关系</option>
+                <% @relationdef.each do |f| %>
+                    <option value=<%= f.id %> ><%= f.relation %></option>
+                <% end %>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">地址：</label>
+            <div class="col-sm-5">
+              <%= f.text_field :address,class:"form-control" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">电话：</label>
+            <div class="col-sm-5">
+              <%= f.text_field :tel,class:"form-control" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">备注：</label>
+            <div class="col-sm-5">
+              <%= f.text_field :content,class:"form-control" %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label"></label>
+            <div class="col-sm-5 text-right">
+              <%= f.submit '确定',class: "btn btn-w-m btn-primary ",id:'smt' %>&nbsp;<%= link_to "返回",user_srelations_path(@user),class: "btn btn-w-m btn-primary " %>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>
