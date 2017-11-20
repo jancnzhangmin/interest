@@ -37,4 +37,7 @@
 //= require jquery.jqprint-0.3.js
 //= require plugins/treeview/bootstrap-treeview.js
 //= require ChinaNumToEnglishNum.js
+//= require plugins/bootstrap-table/bootstrap-table.min.js
+//= require plugins/bootstrap-table/bootstrap-table-mobile.min.js
+//= require plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js
 

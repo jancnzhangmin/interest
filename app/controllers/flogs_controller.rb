@@ -1,0 +1,2 @@
+class FlogsController < ApplicationController
+end

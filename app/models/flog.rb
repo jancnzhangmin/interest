@@ -1,0 +1,2 @@
+class Flog < ApplicationRecord
+end

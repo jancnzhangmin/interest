@@ -19,7 +19,6 @@ class SrelationsController < ApplicationController
 
   def create
     @srelation = @user.srelations.new(srelation_params)
-    debugger
     respond_to do |format|
       if @srelation.save
         format.html { redirect_to user_srelations_path(@user), notice: 'Unit was successfully created.' }

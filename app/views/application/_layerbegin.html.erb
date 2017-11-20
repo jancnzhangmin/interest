@@ -1,3 +1,8 @@
+<% if session[:login] == nil || session[:login] =='' %>
+    <script>
+    window.location.href("/logins");
+    </script>
+<% end %>
 <div id="wrapper">
   <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
@@ -46,6 +51,22 @@
         <li data-turbolinks="false">
           <a href="">
             <i class="fa fa-bars"></i>
+            <span class="nav-label">统计</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level">
+            <li>
+              <%= link_to '区域统计',regioncounts_path,'data-no-turbolink'=>true%>
+            </li>
+            <li>
+              <%= link_to '用户统计',usercounts_path,'data-no-turbolink'=>true%>
+            </li>
+          </ul>
+        </li>
+
+        <li data-turbolinks="false">
+          <a href="">
+            <i class="fa fa-bars"></i>
             <span class="nav-label">系统</span>
             <span class="fa arrow"></span>
           </a>
@@ -62,6 +83,12 @@
             <li>
               <%= link_to '社会关系定义',relationdefs_path,'data-no-turbolink'=>true%>
             </li>
+            <li>
+              <%= link_to '月结日期',settings_path,'data-no-turbolink'=>true%>
+            </li>
+            <li>
+              <%= link_to '日志', flogs_path,'data-no-turbolink'=>true%>
+            </li>
           </ul>
         </li>
       </ul>
@@ -74,7 +101,7 @@
 
       <ul class="nav navbar-top-links navbar-right">
         <li data-turbolinks="false">
-          <span class="m-r-sm text-muted welcome-message"><a href="/counts" title="返回首页"><i class="fa fa-home"></i></a>云南小粒咖啡</span>
+          <span class="m-r-sm text-muted welcome-message"><i class="fa fa-home"></i>存款利息</span>
         </li>
 
 

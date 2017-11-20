@@ -87,6 +87,9 @@ class UsersController < ApplicationController
     red=@user.deposits.where('redid > 0').count
     @depositcount=@depositcount-red*2
     @cardcount = @user.cards.count
+    @srelationcount = @user.srelations.count
+    @takeoutcount = @user.takeouts.count
+    @interestcount = @user.finterests.count
   end
 
   def getregion

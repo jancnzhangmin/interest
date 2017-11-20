@@ -92,7 +92,7 @@
                       </div>
                       <div class="col-xs-8 text-right">
                         <span> 转出 </span>
-                        <h3 class="font-bold"><%=@depositcount %>笔</h3>
+                        <h3 class="font-bold"><%=@takeoutcount %>笔</h3>
                       </div>
                     </div>
                   </div>
@@ -120,11 +120,27 @@
                   <div class="widget style1 navy-bg">
                     <div class="row">
                       <div class="col-xs-3">
-                        <i class="fa fa fa-users fa-3x"></i>
+                        <i class="fa fa-users fa-3x"></i>
                       </div>
                       <div class="col-xs-8 text-right">
                         <span> 社会关系 </span>
-                        <h3 class="font-bold"><%=@cardcount %>个</h3>
+                        <h3 class="font-bold"><%=@srelationcount %>个</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            <% end %>
+
+            <%= link_to  user_finterests_path(@user) do %>
+                <div class="col-sm-2">
+                  <div class="widget style1 navy-bg">
+                    <div class="row">
+                      <div class="col-xs-3">
+                        <i class="fa fa-calculator fa-3x"></i>
+                      </div>
+                      <div class="col-xs-8 text-right">
+                        <span> 结息 </span>
+                        <h3 class="font-bold"><%=@interestcount %>笔</h3>
                       </div>
                     </div>
                   </div>

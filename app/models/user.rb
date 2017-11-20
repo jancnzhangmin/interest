@@ -6,4 +6,5 @@ class User < ApplicationRecord
   has_many :cards
   has_many :takeouts
   has_many :srelations
+  has_many :finterests
 end

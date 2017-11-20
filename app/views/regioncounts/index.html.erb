@@ -1,0 +1,335 @@
+<script>
+    $(document).ready(function(){
+
+        init();
+
+        $('#addnodes').click(function(){
+            if($('#addclainput').val()==''){
+
+                toastr.error('请输入有效的分类名称');
+                return;
+            }
+            $.ajax( {
+                url:'regions/updatenodes',
+                type:'get',
+                dataType:'json',
+                data:{
+                    way:'add',
+                    selfid:$('#farmclaid').val(),
+                    region:$('#addclainput').val()
+                },
+                success:function(data) {
+                    $('#addclainput').val('');
+                    $('#collapseclaadd').collapse('toggle');
+                    init();
+                },
+                error : function() {
+
+                }
+            });
+        });
+
+        $('#chnodes').click(function(){
+
+            if($('#chclainput').val()==''){
+
+                toastr.error('请输入有效的分类名称');
+                return;
+            }
+            $.ajax( {
+                url:'regions/updatenodes',
+                type:'get',
+                dataType:'json',
+                data:{
+                    way:'ch',
+                    selfid:$('#farmclaid').val(),
+                    region:$('#chclainput').val()
+                },
+                success:function(data) {
+                    $('#chclainput').val('');
+                    $('#collapseclach').collapse('toggle');
+                    init();
+                },
+                error : function() {
+
+                }
+            });
+        });
+
+        $('#upbtn').click(function(){
+
+            if($('#farmclaid').val()==''){
+
+                toastr.error('请选择需要操作的节点');
+                return;
+            }
+
+            $.ajax( {
+                url:'regions/updatenodes',
+                type:'get',
+                dataType:'json',
+                data:{
+                    way:'up',
+                    selfid:$('#farmclaid').val()
+
+                },
+                success:function(data) {
+                    init();
+                },
+                error : function() {
+
+                }
+            });
+
+        });
+
+        $('#delbtn').click(function(){
+
+            if($('#farmclaid').val()==''){
+
+                toastr.error('请选择需要操作的节点');
+                return;
+            }
+
+            $.ajax( {
+                url:'regions/updatenodes',
+                type:'get',
+                dataType:'json',
+                data:{
+                    way:'del',
+                    selfid:$('#farmclaid').val()
+
+                },
+                success:function(data) {
+                    init();
+                },
+                error : function() {
+
+                }
+            });
+
+        });
+
+        $('#downbtn').click(function(){
+            if($('#farmclaid').val()==''){
+
+                toastr.error('请选择需要操作的节点');
+                return;
+            }
+            layer.open({
+                type: 2,
+                title: ' ',
+                maxmin: true,
+                shadeClose: true, //点击遮罩关闭层
+                area : ['800px' , '520px'],
+                content: 'regions/shownodes'
+            });
+
+        });
+
+        $('#editbtn').click(function(){
+            if($('#farmclaid').val()==''){
+
+                toastr.error('请选择需要操作的节点');
+                return;
+            }
+            layer.open({
+                type: 2,
+                title: ' ',
+                maxmin: true,
+                shadeClose: true, //点击遮罩关闭层
+                area : ['800px' , '215px'],
+                content: 'regions/showedit'
+            });
+
+        });
+
+
+        $('#treeview').on('nodeSelected', function(event, data) {
+            //$('#tagsid').val(data.tags);
+
+            $.ajax( {
+                url:'regioncounts/getuser',
+                type:'get',
+                dataType:'json',
+                data:{
+                    selfid:data.tags
+                },
+                success:function(data) {
+                    $('#usercount').text(data.usercount);
+                    $('#amountcount').text(parseFloat(data.amountcount).toFixed(2));
+                    tablejson=data.user;
+                    $('#indepotorderdetailtable').bootstrapTable({
+                        columns: [{
+                            field: 'id',
+                            title: 'id',
+                            visible:false
+                        },{
+                            field: 'username',
+                            title: '姓名'
+                        },
+                            {
+                                field: 'region',
+                                title: '区域'
+                            }, {
+                                field: 'interestversion',
+                                title: '利息版本'
+                            },{
+                                field: 'capital',
+                                align: 'right',
+                                title: '合计'
+                            },{
+                                field: 'operate',
+                                title: '操作',
+                                align: 'center',
+                                events: operateEvents,
+                                formatter: operateFormatter
+                            }],
+                        formatLoadingMessage: function(){
+                            return "";
+                        },
+                        data: data.user
+                    });
+
+                    $('#indepotorderdetailtable').bootstrapTable('load',tablejson);
+                },
+                error : function() {
+
+                }
+            });
+        });
+
+
+    });
+    function movenode(){
+        $.ajax( {
+            url:'regions/updatenodes',
+            type:'get',
+            dataType:'json',
+            data:{
+                way:'down',
+                selfid:$('#farmclaid').val(),
+                moveto:$('#movefarmclaid').val()
+
+            },
+            success:function(data) {
+                init();
+            },
+            error : function() {
+
+            }
+        });
+    }
+
+    function edit(){
+        $.ajax( {
+            url:'regions/updatenodes',
+            type:'get',
+            dataType:'json',
+            data:{
+                way:'edit',
+                selfid:$('#farmclaid').val(),
+                region:$('#farmclacla').val()
+
+            },
+            success:function(data) {
+                init();
+            },
+            error : function() {
+
+            }
+        });
+    }
+
+    function init(){
+        $.ajax( {
+            url:'regions/getnodes',
+            type:'get',
+            dataType:'json',
+            success:function(data) {
+                $("#treeview").treeview({color:"#428bca",data:data,onNodeSelected:function(e,o){$("#farmclaid").val(o.tags),$('#farmclacla').val(o.text)}})
+
+            },
+            error : function() {
+            }
+        });
+    }
+
+
+    window.operateEvents = {
+
+        'click .edit': function (e, value, row, index) {
+
+            window.location.href='./users/'+[row.id];
+
+        },
+        'click .remove': function (e, value, row, index) {
+            $.ajax({
+                async : false,
+                url : "../deleteindepotorderdetail",
+                type : "GET",
+                dataType : 'json',
+
+                timeout : 5000,
+                data:{
+                    ids:[row.id]
+
+                },
+                success : function(jsonstr) {// 客户端jquery预先定义好的callback函数,成功获取跨域服务器上的json数据后,会动态执行这个callback函数
+                    //alert(jsonstr.price);
+                    refreshdata();
+                },
+                error : function(xhr) {
+                }
+            });
+        }
+    };
+
+    function operateFormatter(value, row, index) {
+        return [
+            '<a class="edit" href="javascript:void(0)" title="编辑">',
+            '<i class="fa fa-pencil"></i>',
+            '</a>  ',
+            '<a class="remove" href="javascript:void(0)" title="删除">',
+            '<i class="fa fa-trash"></i>',
+            '</a>'
+        ].join('');
+    }
+
+</script>
+<%= render 'layerbegin' %>
+<div class="col-lg-12">
+  <div class="ibox float-e-margins">
+    <div class="ibox-content col-md-12">
+      <div class="ibox-title">
+        <h3>区域</h3>
+      </div>
+      <div class="ibox-content">
+        <div class="col-md-8">
+          <div class="ibox-content">
+            <div id="treeview" class="test"></div>
+          </div>
+          <input id="farmclaid" type="hidden" >
+          <input id="movefarmclaid" type="hidden" >
+          <input id="farmclacla" type="hidden" >
+        </div>
+        <div class="col-md-4">
+          <ul class="list-group clear-list">
+            <li class="list-group-item fist-item">
+              <span class="pull-right" id="usercount"></span> 用户数量
+            </li>
+            <li class="list-group-item">
+              <span class="pull-right" id="amountcount"></span> 金额合计
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ibox-content">
+        <table id="indepotorderdetailtable" data-id-field="id" data-pagination="true" ></table>
+      </div>
+
+    </div>
+  </div>
+</div>
+<%=render 'layerend' %>

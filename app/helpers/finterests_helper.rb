@@ -1,0 +1,2 @@
+module FinterestsHelper
+end

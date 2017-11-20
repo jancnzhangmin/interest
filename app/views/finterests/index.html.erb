@@ -1,0 +1,55 @@
+<%= render 'layerbegin' %>
+<script>
+    function SetCwinHeight(){
+        var iframeid=document.getElementById("noiframe"); //iframe id
+        if (document.getElementById){
+            if (iframeid && !window.opera){
+                if (iframeid.contentDocument && iframeid.contentDocument.body.offsetHeight){
+                    iframeid.height = iframeid.contentDocument.body.offsetHeight;
+                }else if(iframeid.Document && iframeid.Document.body.scrollHeight){
+                    iframeid.height = iframeid.Document.body.scrollHeight;
+                }
+            }
+        }
+    }
+    function SetCwinHeight2(){
+        var iframeid=document.getElementById("hasiframe"); //iframe id
+        if (document.getElementById){
+            if (iframeid && !window.opera){
+                if (iframeid.contentDocument && iframeid.contentDocument.body.offsetHeight){
+                    iframeid.height = iframeid.contentDocument.body.offsetHeight;
+                }else if(iframeid.Document && iframeid.Document.body.scrollHeight){
+                    iframeid.height = iframeid.Document.body.scrollHeight;
+                }
+            }
+        }
+    }
+</script>
+<div class="col-lg-12">
+  <div class="ibox float-e-margins">
+    <div class="ibox-title">
+      <h3>结息</h3>
+    </div>
+    <div class="ibox-content">
+      <div class="clients-list">
+        <ul class="nav nav-tabs">
+
+          <li class="active"><a data-toggle="tab" href="#tab-1"> 已结入本金</a>
+          </li>
+          <li class=""><a data-toggle="tab" href="#tab-2"> 未结入本金</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div id="tab-1" class="tab-pane active">
+            <iframe frameborder="0" width="100%"  onload="Javascript:SetCwinHeight()" id="noiframe" src="finterests/nointerest"></iframe>
+          </div>
+          <div id="tab-2" class="tab-pane">
+            <iframe frameborder="0" width="100%"  onload="Javascript:SetCwinHeight2()" id="hasiframe" src="finterests/hasinterest"></iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<%=render 'layerend' %>
