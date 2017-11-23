@@ -1,0 +1,138 @@
+<%= render 'layerbegin' %>
+<div class="col-lg-12">
+  <div class="ibox float-e-margins">
+    <div class="ibox-title">
+      <h3>编辑管理员</h3>
+    </div>
+    <script>
+        $(document).ready(function(){
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green'
+            });
+
+
+            $('#statuscheck').on('ifChecked',function(event){
+                $('#status').val(1);
+            });
+            $('#statuscheck').on('ifUnchecked',function(event){
+                $('#status').val(0);
+            });
+
+            if($('#status').val()==''){
+                $('#status').val(1);
+                $('#statuscheck').iCheck('check');
+            }
+            if($('#status').val()=='1'){
+
+                $('#statuscheck').iCheck('check');
+            }
+
+            $('#smt').click(function(){
+
+
+            });
+
+
+            $("#adminform").validate({
+                debug:false, //调试模式，即使验证成功也不会跳转到目标页面
+                onkeyup:null, //当丢失焦点时才触发验证请求
+                rules:{     //配置验证规则，key就是被验证的dom对象，value就是调用验证的方法(也是json格式)
+                    'admin[username]':{
+                        required:true //必填。如果验证方法不需要参数，则配置为true
+                    },
+                    'admin[password]':{
+                        required:false
+                    },
+                    'admin[password_confirmation]':{
+                        required:false,
+                        equalTo:'#admin_password' //表示和id="spass"的值相同
+                    },
+                    'admin[login]':{
+                        required:true,
+                        remote:{
+                            url:"checklogin",
+                            type:"get"
+                        }
+                    }
+                },
+                messages:{
+                    'admin[username]':{
+                        required:"请输入用户名"
+                    },
+                    'admin[password]':{
+                        required:"请输入密码"
+                    },
+                    'admin[password_confirmation]':{
+                        required:"请再次输入密码",
+                        equalTo:"两次密码必须一致" //表示和id="spass"的值相同
+                    },
+                    'admin[login]':{
+                        required:"账号不能为空",
+                        remote:"该用户名已存在！"
+                    }
+                }
+            });
+
+
+        });
+
+    </script>
+    <div class="col-md-12 ibox ibox-content">
+      <div class="ibox-content form-horizontal m-t">
+
+        <% flash.each do |key, value| %>
+            <div class="alert alert-<%= key %>"><%= value %></div>
+        <% end %>
+
+        <div class="form-group">
+
+              <%= form_for(:modifypwd, url: modifypwds_path,:html => {:class=>'m-t'}) do |f| %>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">姓名：</label>
+                <div class="col-sm-5">
+                  <%= f.text_field :username,class:"form-control",'readonly':'true',value:@admin.username %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">账号：</label>
+                <div class="col-sm-5">
+                      <%= f.text_field :login,class:"form-control",'readonly':'true',value:@admin.login %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">旧密码：</label>
+                <div class="col-sm-5">
+                  <%= f.password_field :oldpassword,class:"form-control" %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">新密码：</label>
+                <div class="col-sm-5">
+                  <%= f.password_field :password,class:"form-control" %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">确认密码：</label>
+                <div class="col-sm-5">
+                  <%= f.password_field :password_confirmation,class:"form-control" %>
+                </div>
+              </div>
+
+
+
+              <div class="form-group">
+                <label class="col-sm-3 control-label"></label>
+                <div class="col-sm-5 text-right">
+                  <%= f.submit '确定',class: "btn btn-w-m btn-primary ",id:'smt' %>
+                </div>
+              </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<%=render 'layerend' %>

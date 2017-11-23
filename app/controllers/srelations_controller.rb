@@ -21,6 +21,7 @@ class SrelationsController < ApplicationController
     @srelation = @user.srelations.new(srelation_params)
     respond_to do |format|
       if @srelation.save
+        Flog.create(log:'新增社会关系 '+@user.username+':'+@srelation.name,logtype:1,user:session[:username])
         format.html { redirect_to user_srelations_path(@user), notice: 'Unit was successfully created.' }
       else
         format.html { render :new }
@@ -31,6 +32,7 @@ class SrelationsController < ApplicationController
   def update
     respond_to do |format|
       if @srelation.update(srelation_params)
+        Flog.create(log:'编辑社会关系 '+@user.username+':'+@srelation.name,logtype:1,user:session[:username])
         format.html { redirect_to user_srelations_path(@user), notice: 'Unit was successfully updated.' }
         format.json { render :show, status: :ok, location: @srelation }
       else
@@ -42,6 +44,7 @@ class SrelationsController < ApplicationController
 
   def destroy
     @srelation.destroy
+    Flog.create(log:'删除社会关系 '+@user.username+':'+@srelation.name,logtype:1,user:session[:username])
     respond_to do |format|
       format.html { redirect_to user_srelations_path(@user), notice: '删除成功' }
       format.json { head :no_content }

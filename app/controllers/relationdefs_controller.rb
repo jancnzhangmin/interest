@@ -17,6 +17,7 @@ class RelationdefsController < ApplicationController
     @relationdef = Relationdef.new(relationdef_params)
     respond_to do |format|
       if @relationdef.save
+        Flog.create(log:'新增社会关系定义 '+@relationdef.relation,logtype:1,user:session[:username])
         format.html { redirect_to relationdefs_path, notice: 'User was successfully created.' }
       else
         format.html { render :new }
@@ -27,6 +28,7 @@ class RelationdefsController < ApplicationController
   def update
     respond_to do |format|
       if @relationdef.update(relationdef_params)
+        Flog.create(log:'编辑社会关系定义 '+@relationdef.relation,logtype:1,user:session[:username])
         format.html { redirect_to relationdefs_path, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -37,6 +39,7 @@ class RelationdefsController < ApplicationController
   end
 
   def destroy
+    Flog.create(log:'删除社会关系定义 '+@relationdef.relation,logtype:1,user:session[:username])
     @relationdef.destroy
     respond_to do |format|
       format.html { redirect_to relationdefs_path, notice: '删除成功' }

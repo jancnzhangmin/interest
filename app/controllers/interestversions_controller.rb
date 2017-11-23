@@ -17,6 +17,7 @@ class InterestversionsController < ApplicationController
     @interestversion = Interestversion.new(interestversion_params)
     respond_to do |format|
       if @interestversion.save
+        Flog.create(log:'新增存息版本 '+@interestversion.name+':'+@interestversion.rate.to_s,logtype:1,user:session[:username])
         format.html { redirect_to interestversions_path, notice: 'Interestversion was successfully created.' }
       else
         format.html { render :new }
@@ -27,6 +28,7 @@ class InterestversionsController < ApplicationController
   def update
     respond_to do |format|
       if @interestversion.update(interestversion_params)
+        Flog.create(log:'新增存息版本 '+@interestversion.name+':'+@interestversion.rate.to_s,logtype:1,user:session[:username])
         format.html { redirect_to interestversions_path, notice: 'Interestversion was successfully updated.' }
         format.json { render :show, status: :ok, location: @interestversion }
       else
@@ -37,6 +39,7 @@ class InterestversionsController < ApplicationController
   end
 
   def destroy
+    Flog.create(log:'新增存息版本 '+@interestversion.name+':'+@interestversion.rate.to_s,logtype:1,user:session[:username])
     @interestversion.destroy
     respond_to do |format|
       format.html { redirect_to interestversions_path, notice: '删除成功' }

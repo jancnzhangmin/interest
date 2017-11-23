@@ -1,0 +1,42 @@
+<%= render 'layerbegin' %>
+<div class="col-lg-12">
+  <div class="ibox float-e-margins">
+    <div class="ibox-title">
+      <h3>日志</h3>
+    </div>
+    <div class="ibox-content">
+      <table class="table table-hover table-bordered text-center">
+        <thead>
+        <tr>
+          <th class="text-center">日志类型</th>
+          <th class="text-center">操作员</th>
+          <th class="text-center">日志</th>
+          <th class="text-center">时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @flogs.each do |flog| %>
+            <tr>
+              <td>
+                <% if flog.logtype == '0' %>
+                    系统
+                <% else %>
+                    应用
+                <% end %>
+
+              </td>
+              <td><%= flog.user %></td>
+              <td><%= flog.log %></td>
+              <td><%= flog.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <div class="text-center">
+      <%= will_paginate @flogs, renderer: BootstrapPagination::Rails %>
+      </div>
+      <br>
+    </div>
+  </div>
+</div>
+<%=render 'layerend' %>

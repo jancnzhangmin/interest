@@ -12,23 +12,39 @@
           <th class="text-center">转入方式</th>
           <th class="text-center">金额</th>
           <th class="text-center">转入时间</th>
+          <th class="text-center">操作</th>
 
         </tr>
         </thead>
         <tbody>
         <% @deposits.each do |deposit| %>
-            <tr>
-              <td><%= deposit.ordernumber %></td>
-              <td><%= deposit.deposittypedef.depostitype %></td>
-              <td><%= sprintf("%.2f",deposit.amount) %></td>
-              <td><%= deposit.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+            <% if deposit.red.to_s != '' %>
+                <tr class="text-danger">
+            <% elsif Deposit.where('ordernumber = ?',deposit.ordernumber).count > 1 %>
+                <tr class="text-muted">
+            <% else %>
+                <tr>
+            <% end %>
+            <td><%= deposit.ordernumber %></td>
+            <td><%= deposit.deposittypedef.depostitype %></td>
+            <td><%= sprintf("%.2f",deposit.amount) %></td>
+            <td><%= deposit.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+            <td>
+              <% if Deposit.where('ordernumber = ?',deposit.ordernumber).count == 1 %>
+                  <%= link_to '红冲',redto_user_deposit_path(@user,deposit) %>
+              <% elsif deposit.red.to_s != '' %>
+                  <%= link_to '反冲',redto_user_deposit_path(@user,deposit) %>
+              <% end %>
+            </td>
             </tr>
+
+
         <% end %>
         </tbody>
       </table>
       <div class="text-right">
-      <%= link_to "转入",new_user_deposit_path(@user),class: "btn btn-w-m btn-primary" %>&nbsp;
-      <%= link_to "返回",user_path(@user),class: "btn btn-w-m btn-primary" %>
+        <%= link_to "转入",new_user_deposit_path(@user),class: "btn btn-w-m btn-primary" %>&nbsp;
+        <%= link_to "返回",user_path(@user),class: "btn btn-w-m btn-primary" %>
       </div>
       <br>
     </div>

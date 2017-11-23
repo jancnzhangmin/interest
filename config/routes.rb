@@ -20,8 +20,16 @@ Rails.application.routes.draw do
       get 'in'
       get 'getregionall'
     end
-    resources :deposits
-    resources :takeouts
+    resources :deposits do
+      member do
+        get 'redto'
+      end
+    end
+    resources :takeouts do
+      member do
+        get 'redto'
+      end
+    end
     resources :cards
     resources :srelations
     resources :finterests do
@@ -45,6 +53,17 @@ Rails.application.routes.draw do
   resources :settings do
     collection do
       get 'savemonthday'
+    end
+  end
+  resources :modifypwds
+  resources :depositdayreports do
+    collection do
+      get 'getvalue'
+    end
+  end
+  resources :depositmonthreports do
+    collection do
+      get 'getvalue'
     end
   end
 end

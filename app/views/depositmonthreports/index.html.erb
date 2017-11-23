@@ -1,0 +1,77 @@
+<%= render 'layerbegin' %>
+<script>
+    $(document).ready(function(){
+        init(null);
+        function init(val){
+            var title;
+            var month;
+            var deposit;
+            var takeout;
+            var temdate=$('#selectdate').val();
+            if(val){
+                temdate=val;
+            }
+            $.ajax( {
+                url:'depositmonthreports/getvalue',
+                type:'get',
+                dataType:'json',
+                data:{
+                  date:temdate
+                },
+                success:function(data) {
+                    title=data.title;
+                    month = data.month;
+                    deposit = data.deposit;
+                    takeout = data.takeout;
+                    getvalue(title,month,deposit,takeout);
+                },
+                error : function() {
+                }
+            });
+        }
+
+        function getvalue(title,month,deposit,takeout){
+            $(function(){var t=echarts.init(document.getElementById("echarts-bar-chart")),n={title:{text:title},
+                tooltip:{trigger:"axis"},legend:{data:["存款","取款"]},
+                grid:{x:80,x2:80,y2:24},calculable:!0,xAxis:[{type:"category",data:month}],
+                yAxis:[{type:"value"}],series:[{name:"存款",type:"bar",data:deposit,
+
+                    markLine:{data:[{type:"average",name:"平均值"}]}},{name:"取款",type:"bar",data:takeout,
+
+                    markLine:{data:[{type:"average",name:"平均值"}]}}]};t.setOption(n),window.onresize=t.resize;});
+
+
+        }
+
+        //年月选择器
+        laydate.render({
+            elem: '#selectdate'
+            ,type: 'year',
+                done: function(value, date){
+                    init(value);
+
+        }
+        });
+
+    });
+</script>
+<div class="col-lg-12">
+  <div class="ibox float-e-margins">
+    <div class="ibox-title">
+<div class="col-sm-10">
+
+</div>
+      <div class="col-sm-2">
+
+        <div class="input-group" style="margin-top: -10px;">
+          <input id="selectdate" value=<%= @nowdate %> type="text" class="form-control"> <span class="input-group-btn"> <button type="button" class="btn btn-primary">日期
+        </button> </span>
+        </div>
+      </div>
+    </div>
+    <div class="ibox-content">
+      <div class="echarts" id="echarts-bar-chart"></div>
+    </div>
+  </div>
+</div>
+<%=render 'layerend' %>

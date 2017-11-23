@@ -51,6 +51,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
+        Flog.create(log:'新增用户 '+@user.username,logtype:1,user:session[:username])
         if @user.capital.to_s ==''
           @user.capital = 0
           @user.save
@@ -65,6 +66,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
+        Flog.create(log:'编辑用户 '+@user.username,logtype:1,user:session[:username])
         format.html { redirect_to users_path, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -75,6 +77,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    Flog.create(log:'删除用户 '+@user.username,logtype:1,user:session[:username])
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_path, notice: '删除成功' }
@@ -85,10 +88,12 @@ class UsersController < ApplicationController
   def show
     @depositcount = @user.deposits.where('redid is null or redid = 0').count
     red=@user.deposits.where('redid > 0').count
-    @depositcount=@depositcount-red*2
+    @depositcount=@depositcount-red
     @cardcount = @user.cards.count
     @srelationcount = @user.srelations.count
-    @takeoutcount = @user.takeouts.count
+    @takeoutcount = @user.takeouts.where('redid is null or redid = 0').count
+    takered =@user.takeouts.where('redid > 0').count
+    @takeoutcount-=takered
     @interestcount = @user.finterests.count
   end
 

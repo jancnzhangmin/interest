@@ -12,6 +12,7 @@ class Finterest < ApplicationRecord
           if interests.count == 0 && user.capital > 0
             rate = user.interestversion.rate * user.capital
             interests.create(amount:rate,incapitalstatus:0,interesttype:0,interestday:(Time.now - tice.day).beginning_of_day)
+            Flog.create(log:'日息计息 '+user.username+':￥'+rate.to_s+' 计息版本'+((Time.now - tice.day).beginning_of_day).strftime('%Y%m%d'),logtype:0,user:'system')
           end
         end
       end
@@ -23,10 +24,11 @@ class Finterest < ApplicationRecord
       users = User.all
       users.each do |user|
         interests = user.finterests.where('incapitalstatus = 0')
-        interestsum = user.finterests.where('incapitalstatus = 0').sum('amount')
-        user.capital += interestsum
-        user.save
         if interests.count > 0
+          interestsum = user.finterests.where('incapitalstatus = 0').sum('amount')
+          user.capital += interestsum
+          user.save
+          Flog.create(log:'计入本金 '+user.username+':￥'+interestsum.to_s,logtype:0,user:'system')
           interests.each do |interest|
             interest.incapitalstatus = 1
             interest.save

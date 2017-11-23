@@ -17,6 +17,7 @@ class AdminsController < ApplicationController
     @admin = Admin.new(admin_params)
     respond_to do |format|
       if @admin.save
+        Flog.create(log:'创建管理员'+@admin.username,logtype:1,user:session[:username])
         format.html { redirect_to admins_path, notice: 'Admin was successfully created.' }
       else
         format.html { render :new }
@@ -27,6 +28,7 @@ class AdminsController < ApplicationController
   def update
     respond_to do |format|
       if @admin.update(admin_params)
+        Flog.create(log:'修改管理员'+@admin.username,logtype:1,user:session[:username])
         format.html { redirect_to admins_path, notice: 'Admin was successfully updated.' }
         format.json { render :show, status: :ok, location: @admin }
       else
@@ -39,6 +41,7 @@ class AdminsController < ApplicationController
   def destroy
     @admin.destroy
     respond_to do |format|
+      Flog.create(log:'删除管理员'+@admin.username,logtype:1,user:session[:username])
       format.html { redirect_to admins_path, notice: '删除成功' }
       format.json { head :no_content }
     end

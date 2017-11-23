@@ -11,6 +11,7 @@ class SettingsController < ApplicationController
     @setting = Setting.first
     @setting.monthday = params[:monthday]
     @setting.save
+    Flog.create(log:'编辑月结日期 '+@setting.monthday.to_s+'号',logtype:1,user:session[:username])
     render json: '{"monthday":"'+@setting.to_json+'"}'
   end
 

@@ -1,6 +1,6 @@
 <% if session[:login] == nil || session[:login] =='' %>
     <script>
-    window.location.href("/logins");
+    window.location.href = '/logins'
     </script>
 <% end %>
 <div id="wrapper">
@@ -8,21 +8,23 @@
     <div class="sidebar-collapse">
       <ul class="nav" id="side-menu">
         <li class="nav-header">
-          <div class="dropdown profile-element"> <span>
-                             </span>
-            <a data-toggle="dropdown" class="dropdown-toggle">
+          <div class="dropdown profile-element">
+            <span>
+              <%=image_tag("header.jpg",class:'img-circle') %>
+            </span>
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                                  <span class="block m-t-xs">
-                                    <strong class="font-bold"><%= session[:username] %></strong>
-                                   </span>
-                                  <span>当前管理员 </span>
+                               <span class="block m-t-xs"><strong class="font-bold"><%=session[:username] %></strong></span>
+                                <span class="text-muted text-xs block">我的信息<b class="caret"></b></span>
                                 </span>
             </a>
             <ul class="dropdown-menu animated fadeInRight m-t-xs">
-              <li class="divider"></li>
-              <li><%= link_to '退出' %>
+              <li>
+                <%= link_to '修改密码', modifypwds_path ,class:'J_menuItem' %>
               </li>
-
+              <li class="divider"></li>
+              <li><a href="login.html">安全退出</a>
+              </li>
             </ul>
           </div>
           <div class="logo-element">
@@ -60,6 +62,12 @@
             </li>
             <li>
               <%= link_to '用户统计',usercounts_path,'data-no-turbolink'=>true%>
+            </li>
+            <li>
+              <%= link_to '存取款日报表',depositdayreports_path,'data-no-turbolink'=>true%>
+            </li>
+            <li>
+              <%= link_to '存取款月报表',depositmonthreports_path,'data-no-turbolink'=>true%>
             </li>
           </ul>
         </li>
