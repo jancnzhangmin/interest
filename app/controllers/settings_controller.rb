@@ -1,4 +1,5 @@
 class SettingsController < ApplicationController
+  before_action {authen "depositday"}
   def index
     @setting = Setting.all
     if @setting.count == 0

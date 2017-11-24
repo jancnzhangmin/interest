@@ -1,5 +1,5 @@
 class DepositsController < ApplicationController
-
+  before_action {authen "deposit"}
   def index
     @user = User.find(params[:user_id])
     @deposits = @user.deposits.order('ordernumber desc')

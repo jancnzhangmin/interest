@@ -30,9 +30,9 @@
             <td><%= sprintf("%.2f",deposit.amount) %></td>
             <td><%= deposit.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
             <td>
-              <% if Deposit.where('ordernumber = ?',deposit.ordernumber).count == 1 %>
+              <% if Deposit.where('ordernumber = ?',deposit.ordernumber).count == 1 && authen('depositred')%>
                   <%= link_to '红冲',redto_user_deposit_path(@user,deposit) %>
-              <% elsif deposit.red.to_s != '' %>
+              <% elsif deposit.red.to_s != '' && authen('depositred') %>
                   <%= link_to '反冲',redto_user_deposit_path(@user,deposit) %>
               <% end %>
             </td>

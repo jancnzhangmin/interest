@@ -1,5 +1,5 @@
 class DepositdayreportsController < ApplicationController
-
+  before_action {authen "depositday"}
   def index
     @nowdate = Time.now.strftime('%Y-%m')
   end

@@ -1,4 +1,5 @@
 class TakeoutsController < ApplicationController
+  before_action {authen "takeout"}
   def index
     @user = User.find(params[:user_id])
     @takeouts = @user.takeouts.order('ordernumber desc')

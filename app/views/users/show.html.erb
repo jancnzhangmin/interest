@@ -67,6 +67,7 @@
 
           <div class="row">
 
+            <% if authen('deposit') %>
             <%= link_to  user_deposits_path(@user) do %>
                 <div class="col-sm-2">
                   <div class="widget style1 navy-bg">
@@ -82,7 +83,9 @@
                   </div>
                 </div>
             <% end %>
+                <% end %>
 
+            <% if authen('takeout') %>
             <%= link_to  user_takeouts_path(@user) do %>
                 <div class="col-sm-2">
                   <div class="widget style1 navy-bg">
@@ -98,7 +101,9 @@
                   </div>
                 </div>
             <% end %>
+                <% end %>
 
+            <% if authen('card') %>
             <%= link_to  user_cards_path(@user) do %>
                 <div class="col-sm-2">
                   <div class="widget style1 navy-bg">
@@ -114,7 +119,9 @@
                   </div>
                 </div>
             <% end %>
+                <% end %>
 
+            <% if authen('relation') %>
             <%= link_to  user_srelations_path(@user) do %>
                 <div class="col-sm-2">
                   <div class="widget style1 navy-bg">
@@ -130,7 +137,9 @@
                   </div>
                 </div>
             <% end %>
+                <% end %>
 
+            <% if authen('interest') %>
             <%= link_to  user_finterests_path(@user) do %>
                 <div class="col-sm-2">
                   <div class="widget style1 navy-bg">
@@ -146,6 +155,7 @@
                   </div>
                 </div>
             <% end %>
+                <% end %>
 
           </div>
         </div>

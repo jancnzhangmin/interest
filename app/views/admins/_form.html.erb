@@ -24,9 +24,129 @@
         }
 
         $('#smt').click(function(){
+            var auth ='';
+            if($('#region').is(':checked')){
+                auth+='region:';
+            }
+            if($('#user').is(':checked')){
+                auth+='user:';
+            }
+            if($('#deposit').is(':checked')){
+                auth+='deposit:';
+            }
+            if($('#takeout').is(':checked')){
+                auth+='takeout:';
+            }
+            if($('#card').is(':checked')){
+                auth+='card:';
+            }
+            if($('#relation').is(':checked')){
+                auth+='relation:';
+            }
+            if($('#interest').is(':checked')){
+                auth+='interest:';
+            }
+            if($('#regioncount').is(':checked')){
+                auth+='regioncount:';
+            }
+            if($('#usercount').is(':checked')){
+                auth+='usercount:';
+            }
+            if($('#depositday').is(':checked')){
+                auth+='depositday:';
+            }
+            if($('#depositmonth').is(':checked')){
+                auth+='depositmonth:';
+            }
+            if($('#admin').is(':checked')){
+                auth+='admin:';
+            }
+            if($('#interestversion').is(':checked')){
+                auth+='interestversion:';
+            }
+            if($('#deposittypedef').is(':checked')){
+                auth+='deposittypedef:';
+            }
+            if($('#relationdef').is(':checked')){
+                auth+='relationdef:';
+            }
+            if($('#interestday').is(':checked')){
+                auth+='interestday:';
+            }
+            if($('#log').is(':checked')){
+                auth+='log:';
+            }
+            if($('#depositred').is(':checked')){
+                auth+='depositred:';
+            }
+            if($('#takeoutred').is(':checked')){
+                auth+='takeoutred:';
+            }
 
-
+            $('#auth').val(auth);
         });
+
+        if($('#auth').val()!='') {
+            var auths = $('#auth').val().split(':');
+            if($.inArray('region', auths)>-1){
+                $('#region').iCheck('check');
+            }
+            if($.inArray('user', auths)>-1){
+                $('#user').iCheck('check');
+            }
+            if($.inArray('deposit', auths)>-1){
+                $('#deposit').iCheck('check');
+            }
+            if($.inArray('takeout', auths)>-1){
+                $('#takeout').iCheck('check');
+            }
+            if($.inArray('card', auths)>-1){
+                $('#card').iCheck('check');
+            }
+            if($.inArray('relation', auths)>-1){
+                $('#relation').iCheck('check');
+            }
+            if($.inArray('interest', auths)>-1){
+                $('#interest').iCheck('check');
+            }
+            if($.inArray('regioncount', auths)>-1){
+                $('#regioncount').iCheck('check');
+            }
+            if($.inArray('usercount', auths)>-1){
+                $('#usercount').iCheck('check');
+            }
+            if($.inArray('depositday', auths)>-1){
+                $('#depositday').iCheck('check');
+            }
+            if($.inArray('depositmonth', auths)>-1){
+                $('#depositmonth').iCheck('check');
+            }
+            if($.inArray('admin', auths)>-1){
+                $('#admin').iCheck('check');
+            }
+            if($.inArray('interestversion', auths)>-1){
+                $('#interestversion').iCheck('check');
+            }
+            if($.inArray('deposittypedef', auths)>-1){
+                $('#deposittypedef').iCheck('check');
+            }
+            if($.inArray('relationdef', auths)>-1){
+                $('#relationdef').iCheck('check');
+            }
+            if($.inArray('interestday', auths)>-1){
+                $('#interestday').iCheck('check');
+            }
+            if($.inArray('log', auths)>-1){
+                $('#log').iCheck('check');
+            }
+            if($.inArray('depositred', auths)>-1){
+                $('#depositred').iCheck('check');
+            }
+            if($.inArray('takeoutred', auths)>-1){
+                $('#takeoutred').iCheck('check');
+            }
+        }
+
 
 
         $("#adminform").validate({
@@ -88,8 +208,8 @@
             <label class="col-sm-3 control-label">账号：</label>
             <div class="col-sm-5">
               <% if @admin.id %>
-              <%= f.text_field :login,class:"form-control",'readonly':'true' %>
-                  <% else %>
+                  <%= f.text_field :login,class:"form-control",'readonly':'true' %>
+              <% else %>
                   <%= f.text_field :login,class:"form-control" %>
               <% end %>
             </div>
@@ -111,10 +231,155 @@
             <label class="col-sm-3 control-label">状态：</label>
             <div class="col-sm-5">
               <%= f.hidden_field :status,class:"form-control",id:'status' %>
+              <%= f.hidden_field :auth,class:"form-control",id:'auth' %>
               <label>
                 <input type="checkbox" class="i-checks" id="statuscheck">正常</label>
             </div>
           </div>
+
+          <div class="hr-line-dashed text-center"></div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">用户
+            </label>
+            <div class="col-sm-5">
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="region"> <i></i> 区域</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="user"> <i></i> 用户</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="hidden" value=""> <i></i> </label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="deposit"> <i></i> 存入</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="takeout"> <i></i> 转出</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="depositred"> <i></i> 存入红冲</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="takeoutred"> <i></i> 转出红冲</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="card"> <i></i> 银行卡</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="relation"> <i></i> 社会关系</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="interest"> <i></i> 结息</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">统计
+            </label>
+            <div class="col-sm-5">
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="regioncount"> <i></i> 区域统计</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="usercount"> <i></i> 用户统计</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="depositday"> <i></i> 存取款日报表</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="depositmonth"> <i></i> 存取款月报表</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">系统
+            </label>
+            <div class="col-sm-5">
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="admin"> <i></i> 管理员</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="interestversion"> <i></i> 存息版本</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="deposittypedef"> <i></i> 存入方式</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="relationdef"> <i></i> 社会关系定义</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="interestday"> <i></i> 月结日期</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="log"> <i></i> 日志</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hr-line-dashed text-center"></div>
 
 
           <div class="form-group">

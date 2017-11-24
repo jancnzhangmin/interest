@@ -16,12 +16,27 @@
 
             }
         });
+
+
+
+        $('#searchbtn').click(function(){
+            window.location.href=window.location.href.split('?')[0]+'?search='+$('#search').val();
+        });
+
+
+
     });
 </script>
 <div class="col-lg-12">
   <div class="ibox float-e-margins">
     <div class="ibox-title">
-      <h3>用户管理</h3>
+      <h5>用户管理</h5>
+      <div class="ibox-tools col-sm-3" style="margin-top: -5px;">
+      <div class="input-group">
+        <input type="text" id="search" placeholder="姓名或电话" class="input-sm form-control"> <span class="input-group-btn">
+                                        <button type="button" id="searchbtn" class="btn btn-sm btn-primary"> 搜索</button> </span>
+      </div>
+      </div>
     </div>
     <div class="ibox-content">
       <table class="table table-hover table-bordered text-center">
@@ -50,8 +65,12 @@
               <td><%=sprintf("%.2f",user.capital) %></td>
 
               <td>
+                <% if authen('deposit') %>
                 <%= link_to '存入',new_user_deposit_path(User.find(user.id)) %>
+                    <% end %>
+                <% if authen('takeout') %>
                 <%= link_to '转出',new_user_takeout_path(User.find(user.id)) %>
+                    <% end %>
                 <%= link_to '编辑',edit_user_path(User.find(user.id)) %>
                 <%= link_to '删除', User.find(user.id), method: :delete, data: { confirm: '确认删除?' } %>
                 <%= link_to '更多',user_path(User.find(user.id)) %>
@@ -62,6 +81,9 @@
       </table>
       <%= link_to "新增",new_user_path,class: "btn btn-w-m btn-primary pull-right" %>
       <br>
+      <div class="text-center">
+      <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+      </div>
     </div>
   </div>
 </div>

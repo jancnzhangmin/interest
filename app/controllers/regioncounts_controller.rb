@@ -1,4 +1,5 @@
 class RegioncountsController < ApplicationController
+  before_action {authen "regioncount"}
   def index
 
   end

@@ -1,5 +1,5 @@
 class SrelationsController < ApplicationController
-
+  before_action {authen "relation"}
   before_action :set_srelation, only: [:show, :edit, :update, :destroy]
   before_action :set_user, only: [:show, :edit, :update, :destroy, :new, :create, :index]
   def index

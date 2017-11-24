@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root 'logins#index'
   resources :admins do
     collection do
       get 'checklogin'
@@ -66,4 +67,5 @@ Rails.application.routes.draw do
       get 'getvalue'
     end
   end
+  resources :noauths
 end

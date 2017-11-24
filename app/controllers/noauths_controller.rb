@@ -1,0 +1,2 @@
+class NoauthsController < ApplicationController
+end

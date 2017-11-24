@@ -1,5 +1,5 @@
 class UsercountsController < ApplicationController
-
+  before_action {authen "usercount"}
   def index
     @users = User.all.paginate(:page => params[:page], :per_page => 20).order("id desc")
     @userarr=Array.new

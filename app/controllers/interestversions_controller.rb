@@ -1,5 +1,5 @@
 class InterestversionsController < ApplicationController
-
+  before_action {authen "interestversion"}
   before_action :set_interestversion, only: [:show, :edit, :update, :destroy]
   def index
     @interestversions = Interestversion.all

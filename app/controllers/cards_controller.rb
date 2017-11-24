@@ -1,5 +1,5 @@
 class CardsController < ApplicationController
-
+  before_action {authen "card"}
   def index
     @user = User.find(params[:user_id])
     @cards = @user.cards

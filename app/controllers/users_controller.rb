@@ -1,8 +1,11 @@
 class UsersController < ApplicationController
-
+  before_action {authen "user"}
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   def index
-    @users = User.all
+    @users = User.all.paginate(:page => params[:page], :per_page => 20).order("id desc")
+    if params[:search]
+      @users = User.where('username like ? or tel like ?',"%#{params[:search]}%","%#{params[:search]}%").paginate(:page => params[:page], :per_page => 20).order("id desc")
+    end
     @userarr=Array.new
     @users.each do |f|
       usercla = Userclass.new

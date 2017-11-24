@@ -1,5 +1,5 @@
 class DeposittypedefsController < ApplicationController
-
+  before_action {authen "deposittypedef"}
   before_action :set_deposittypedef, only: [:show, :edit, :update, :destroy]
   def index
     @deposittypedefs = Deposittypedef.all

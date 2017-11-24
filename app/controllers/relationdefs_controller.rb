@@ -1,4 +1,5 @@
 class RelationdefsController < ApplicationController
+  before_action {authen "relationdef"}
   before_action :set_relationdef, only: [:show, :edit, :update, :destroy]
   def index
     @relationdefs = Relationdef.all

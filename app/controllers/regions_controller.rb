@@ -1,5 +1,5 @@
 class RegionsController < ApplicationController
-
+  before_action {authen "region"}
   def index
 
   end

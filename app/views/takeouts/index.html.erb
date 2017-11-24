@@ -40,9 +40,9 @@
               <td><%= sprintf("%.2f",takeout.amount) %></td>
               <td><%= takeout.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
             <td>
-              <% if Takeout.where('ordernumber = ?',takeout.ordernumber).count == 1 %>
+              <% if Takeout.where('ordernumber = ?',takeout.ordernumber).count == 1 && authen('takeoutred') %>
                   <%= link_to '红冲',redto_user_takeout_path(@user,takeout) %>
-              <% elsif takeout.red.to_s != '' %>
+              <% elsif takeout.red.to_s != '' && authen('takeoutred') %>
                   <%= link_to '反冲',redto_user_takeout_path(@user,takeout) %>
               <% end %>
             </td>

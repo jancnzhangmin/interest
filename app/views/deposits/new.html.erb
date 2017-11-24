@@ -87,7 +87,7 @@
               <div class="form-group">
                 <label class="col-sm-3 control-label">存入方式：</label>
                 <div class="col-sm-5">
-                  <%= f.text_field :deposittypedef_id,class:"form-control",id:'deposittypedefid' %>
+                  <%= f.hidden_field :deposittypedef_id,class:"form-control",id:'deposittypedefid' %>
                   <select class="form-control" id="selectdeposittypedef">
                     <option value=0>请选择存入方式</option>
                     <% @deposittypedefs.each do |deposittypedef| %>

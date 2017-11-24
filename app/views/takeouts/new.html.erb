@@ -109,7 +109,7 @@
               <div class="form-group">
                 <label class="col-sm-3 control-label">转出方式：</label>
                 <div class="col-sm-5">
-                  <%= f.text_field :card_id,class:"form-control",id:'deposittypedefid' %>
+                  <%= f.hidden_field :card_id,class:"form-control",id:'deposittypedefid' %>
                   <select class="form-control" id="selectdeposittypedef">
                     <option value=0>现金</option>
                     <% @cards.each do |card| %>
