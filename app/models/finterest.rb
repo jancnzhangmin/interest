@@ -29,6 +29,8 @@ class Finterest < ApplicationRecord
           user.capital += interestsum
           user.save
           Flog.create(log:'计入本金 '+user.username+':￥'+interestsum.to_s,logtype:0,user:'system')
+          interestlogs = user.interestlogs
+          interestlogs.create(amount:interestsum)
           interests.each do |interest|
             interest.incapitalstatus = 1
             interest.save

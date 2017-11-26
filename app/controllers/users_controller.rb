@@ -116,12 +116,12 @@ class UsersController < ApplicationController
       userprocesscla.time = takeout.created_at.strftime('%Y-%m-%d %H:%M:%S')
       @userprocessarr.push userprocesscla
     end
-    interests = @user.finterests
-    interests.each do |interest|
+    interestlogs = @user.interestlogs
+    interestlogs.each do |interestlog|
       userprocesscla = Userprocessclass.new
       userprocesscla.processtype='结息'
-      userprocesscla.amount = sprintf("%.2f",interest.amount)
-      userprocesscla.time = interest.created_at.strftime('%Y-%m-%d %H:%M:%S')
+      userprocesscla.amount = sprintf("%.2f",interestlog.amount)
+      userprocesscla.time = interestlog.created_at.strftime('%Y-%m-%d %H:%M:%S')
       @userprocessarr.push userprocesscla
     end
     #debugger
