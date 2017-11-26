@@ -1,4 +1,11 @@
+<script>
+  $().ready(function(){
+     $('#selectadmin').change(function(){
+         $('#login').val($(this).val());
+     }) ;
 
+  });
+</script>
 
 
 <body class="gray-bg">
@@ -15,7 +22,12 @@
     <%= form_for(:login, url: logins_path,:html => {:class=>'m-t'}) do |f| %>
 
         <div class="form-group">
-          <%= f.text_field :login ,class:"form-control",placeholder:"登陆名"%>
+          <%= f.hidden_field :login,id:'login' ,class:"form-control",placeholder:"登陆名",value:@admins.first.id%>
+          <select class="form-control" id="selectadmin">
+            <% @admins.each do |admin| %>
+                <option value=<%= admin.id %> ><%= admin.username %></option>
+            <% end %>
+          </select>
         </div>
         <div class="form-group">
           <%= f.password_field :password ,class:"form-control",placeholder:"密码" %>

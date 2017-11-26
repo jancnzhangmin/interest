@@ -12,19 +12,41 @@ class RegioncountsController < ApplicationController
     attr :sex,true
     attr :tel,true
     attr :capital,true
+    attr :interest,true
+  end
+
+  class Regionlistclass
+    attr :region,true
+    attr :capital,true
+    attr :interest,true
   end
 
   def getuser
+    regionlistarr = Array.new
     if params[:selfid].to_s == '0'
       users = User.all
     else
       userarr = Array.new
       getregion(params[:selfid],userarr)
       users = User.where('id in (?)',userarr)
+      regions = Region.find(params[:selfid]).childrens
+
+      regions.each do |region|
+        regionlistcla = Regionlistclass.new
+        regionlistcla.region=region.region
+        strings = localregioncount(region.id)
+        regionlistcla.capital= sprintf("%.2f",strings.split(':')[0].to_f)
+        regionlistcla.interest=sprintf("%.2f",strings.split(':')[1].to_f)
+        regionlistarr.push regionlistcla
+      end
     end
 
     usercount = users.count
     amountcount = users.sum('capital')
+    interestcount = 0
+    users.each do |user|
+      interestcount += user.finterests.sum('amount')
+    end
 
     renderuserarr = Array.new
     users.each do |user|
@@ -33,6 +55,7 @@ class RegioncountsController < ApplicationController
       usercla.region = getregiont('',user.region_id)+user.address
       usercla.interestversion = user.interestversion.name
       usercla.username = user.username
+      usercla.interest = sprintf("%.2f",user.finterests.sum('amount'))
       if user.sex == 0
         usercla.sex = '男'
       else
@@ -43,7 +66,7 @@ class RegioncountsController < ApplicationController
       renderuserarr.push usercla
     end
     #render json: renderuserarr.to_json
-    render json: '{"user":'+renderuserarr.to_json+',"usercount":'+usercount.to_json+',"amountcount":'+amountcount.to_json+'}'
+    render json: '{"user":'+renderuserarr.to_json+',"usercount":'+usercount.to_json+',"amountcount":'+amountcount.to_json+',"interestcount":'+interestcount.to_json+',"regionlist":'+regionlistarr.to_json+'}'
   end
 
   private
@@ -78,6 +101,19 @@ class RegioncountsController < ApplicationController
     else
       return ''
     end
+  end
+
+  def localregioncount(regionid)
+    users = Region.find(regionid).users
+    capitalcount = 0
+    interestcount = 0
+    if users.count >0
+      capitalcount = users.sum('capital')
+      users.each do |user|
+        interestcount += user.finterests.sum('amount')
+      end
+    end
+    return capitalcount.to_s+':'+interestcount.to_s
   end
 
 end

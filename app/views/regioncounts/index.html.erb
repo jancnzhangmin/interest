@@ -158,6 +158,7 @@
                 success:function(data) {
                     $('#usercount').text(data.usercount);
                     $('#amountcount').text(parseFloat(data.amountcount).toFixed(2));
+                    $('#interestcount').text(parseFloat(data.interestcount).toFixed(2));
                     tablejson=data.user;
                     $('#indepotorderdetailtable').bootstrapTable({
                         columns: [{
@@ -174,10 +175,15 @@
                             }, {
                                 field: 'interestversion',
                                 title: '利息版本'
+                            },
+                            {
+                                field: 'interest',
+                                align: 'right',
+                                title: '利息'
                             },{
                                 field: 'capital',
                                 align: 'right',
-                                title: '合计'
+                                title: '金额'
                             },{
                                 field: 'operate',
                                 title: '操作',
@@ -192,6 +198,29 @@
                     });
 
                     $('#indepotorderdetailtable').bootstrapTable('load',tablejson);
+
+
+                    $('#regionlisttable').bootstrapTable({
+                        columns: [{
+                            field: 'region',
+                            title: '区域'
+                        },{
+                            field: 'interest',
+                            title: '利息',
+                            align: 'right'
+                        },
+                            {
+                                field: 'capital',
+                                title: '金额',
+                                align: 'right'
+                            }],
+                        formatLoadingMessage: function(){
+                            return "";
+                        },
+                        data: data.regionlist
+                    });
+                    $('#regionlisttable').bootstrapTable('load',data.regionlist);
+
                 },
                 error : function() {
 
@@ -289,10 +318,7 @@
         return [
             '<a class="edit" href="javascript:void(0)" title="编辑">',
             '<i class="fa fa-pencil"></i>',
-            '</a>  ',
-            '<a class="remove" href="javascript:void(0)" title="删除">',
-            '<i class="fa fa-trash"></i>',
-            '</a>'
+            '</a>  '
         ].join('');
     }
 
@@ -321,7 +347,13 @@
             <li class="list-group-item">
               <span class="pull-right" id="amountcount"></span> 金额合计
             </li>
+            <li class="list-group-item">
+              <span class="pull-right" id="interestcount"></span> 利息合计
+            </li>
           </ul>
+          <div class="ibox-content">
+            <table id="regionlisttable" data-id-field="id" data-pagination="true" ></table>
+          </div>
         </div>
       </div>
 

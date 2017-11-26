@@ -158,6 +158,34 @@
                 <% end %>
 
           </div>
+
+
+
+          <table class="table table-hover table-bordered text-center">
+            <thead>
+            <tr>
+              <th class="text-center">操作</th>
+              <th class="text-center">金额</th>
+              <th class="text-center">时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @userprocessarr.each do |user| %>
+                <tr>
+                  <td><%= user.processtype %></td>
+                  <td><%= user.amount %></td>
+                  <td>
+                    <%= user.time %>
+                  </td>
+
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+
+
+
+
         </div>
       </div>
     </div>

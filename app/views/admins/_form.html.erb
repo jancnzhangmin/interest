@@ -82,6 +82,9 @@
             if($('#takeoutred').is(':checked')){
                 auth+='takeoutred:';
             }
+            if($('#deluser').is(':checked')){
+                auth+='deluser:';
+            }
 
             $('#auth').val(auth);
         });
@@ -144,6 +147,9 @@
             }
             if($.inArray('takeoutred', auths)>-1){
                 $('#takeoutred').iCheck('check');
+            }
+            if($.inArray('deluser', auths)>-1){
+                $('#deluser').iCheck('check');
             }
         }
 
@@ -301,6 +307,12 @@
                 <div class="checkbox i-checks">
                   <label>
                     <input type="checkbox" value="" id="interest"> <i></i> 结息</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="checkbox i-checks">
+                  <label>
+                    <input type="checkbox" value="" id="deluser"> <i></i> 删除用户</label>
                 </div>
               </div>
             </div>

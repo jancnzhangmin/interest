@@ -98,6 +98,46 @@ class UsersController < ApplicationController
     takered =@user.takeouts.where('redid > 0').count
     @takeoutcount-=takered
     @interestcount = @user.finterests.count
+
+    @userprocessarr = Array.new
+    deposits = @user.deposits
+    deposits.each do |deposit|
+      userprocesscla = Userprocessclass.new
+      userprocesscla.processtype='存入'
+      userprocesscla.amount = sprintf("%.2f",deposit.amount)
+      userprocesscla.time = deposit.created_at.strftime('%Y-%m-%d %H:%M:%S')
+      @userprocessarr.push userprocesscla
+    end
+    takeouts = @user.takeouts
+    takeouts.each do |takeout|
+      userprocesscla = Userprocessclass.new
+      userprocesscla.processtype='取出'
+      userprocesscla.amount = sprintf("%.2f",takeout.amount)
+      userprocesscla.time = takeout.created_at.strftime('%Y-%m-%d %H:%M:%S')
+      @userprocessarr.push userprocesscla
+    end
+    interests = @user.finterests
+    interests.each do |interest|
+      userprocesscla = Userprocessclass.new
+      userprocesscla.processtype='结息'
+      userprocesscla.amount = sprintf("%.2f",interest.amount)
+      userprocesscla.time = interest.created_at.strftime('%Y-%m-%d %H:%M:%S')
+      @userprocessarr.push userprocesscla
+    end
+    #debugger
+    @userprocessarr.sort_by! do |p|
+      p.time
+    end
+    @userprocessarr.reverse!
+
+    #@userprocessarr.paginate(:page => params[:page], :per_page => 20)
+
+  end
+
+  class Userprocessclass
+    attr :processtype,true
+    attr :amount,true
+    attr :time,true
   end
 
   def getregion

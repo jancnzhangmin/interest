@@ -3,23 +3,26 @@ class LoginsController < ApplicationController
 
 
     def index
+      checkadmin=Admin.all
+      if checkadmin.count == 0
+        Admin.create(username:'系统管理员',login:'admin',password:'admin',password_confirmation:'admin',status:'1',auth:'region:user:deposit:takeout:card:relation:interest:regioncount:usercount:depositday:depositmonth:admin:interestversion:deposittypedef:relationdef:interestday:log:depositred:takeoutred')
+      end
+
       if params[:command]
         session[:login]= nil
         session[:username] = nil
         session[:id]=nil
         session[:auth]=nil
       end
+      @admins = Admin.all
     end
 
     def create
 
-      checkadmin=Admin.all
-      if checkadmin.count == 0
-        Admin.create(username:'系统管理员',login:'admin',password:'admin',password_confirmation:'admin',status:'1',auth:'region:user:deposit:takeout:card:relation:interest:regioncount:usercount:depositday:depositmonth:admin:interestversion:deposittypedef:relationdef:interestday:log:depositred:takeoutred')
-      end
 
 
-      admin = Admin.find_by(login:params[:login][:login])
+
+      admin = Admin.find(params[:login][:login])
       if admin && admin.status==0 && admin.authenticate(params[:login][:password])
         redirect_to action: 'index',id:1
       else

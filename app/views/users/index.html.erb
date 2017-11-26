@@ -72,7 +72,9 @@
                 <%= link_to '转出',new_user_takeout_path(User.find(user.id)) %>
                     <% end %>
                 <%= link_to '编辑',edit_user_path(User.find(user.id)) %>
+                <% if authen('deluser') %>
                 <%= link_to '删除', User.find(user.id), method: :delete, data: { confirm: '确认删除?' } %>
+                    <% end %>
                 <%= link_to '更多',user_path(User.find(user.id)) %>
               </td>
             </tr>
