@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20171126100630) do
     t.integer  "up_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["up_id"], name: "index_regions_on_up_id", using: :btree
   end
 
   create_table "relationdefs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
