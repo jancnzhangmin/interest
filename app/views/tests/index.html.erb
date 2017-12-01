@@ -1,0 +1,31 @@
+//百度官方js
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=iOxsL9Z27dKiNtY5s4m8vRjUyZiNwZOC"></script>
+//根据输入获取坐标的js
+<script>
+    $(function(){
+        /**
+         * 点击获取坐标
+         */
+        $('#getPoint').click(function(){
+            if($('#address').val() == ''){
+                alert('请填写一个地址');
+            }
+            var adds = $('#address').val();
+            getPoint(adds);
+        })
+    })
+    function getPoint(adds){
+        // 创建地址解析器实例
+        var myGeo = new BMap.Geocoder();
+        // 将地址解析结果显示在地图上,并调整地图视野
+        myGeo.getPoint(adds, function(point){
+            $('#shopcoord').val(JSON.stringify(point));
+        }, "北京市");
+    }
+
+</script>
+
+//表单代码：
+<input placeholder="请输入商铺地址" id="address" required="true" type="text" />
+<input placeholder="点击自动获取坐标" readonly="true" id="shopcoord" type="text" />
+<input id="getPoint" type="button" value="获取坐标" />

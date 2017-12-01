@@ -2,6 +2,11 @@ class UsercountsController < ApplicationController
   before_action {authen "usercount"}
   def index
     @users = User.all.paginate(:page => params[:page], :per_page => 20).order("id desc")
+    @searstr =''
+    if params[:search]
+      @users = User.where('username like ? or tel like ?',"%#{params[:search]}%","%#{params[:search]}%").paginate(:page => params[:page], :per_page => 20).order("id desc")
+      @searstr = params[:search]
+    end
     @userarr=Array.new
     @users.each do |f|
       usercla = Userclass.new

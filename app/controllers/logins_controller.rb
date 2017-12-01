@@ -3,6 +3,21 @@ class LoginsController < ApplicationController
 
 
     def index
+
+      user_agent =  request.env['HTTP_USER_AGENT'].downcase
+      if !user_agent.index('chrome/')
+        redirect_to changebrowse_logins_path
+      end
+
+      if session[:login] != nil
+        hostarr = request.host.split('.')
+        hoststr = hostarr[0]+'.'+hostarr[1]+'.'+hostarr[2]+'.'
+        redirect_to 'http://'+hoststr + (hostarr[3].to_i + 1).to_s
+      end
+
+
+
+
       checkadmin=Admin.all
       if checkadmin.count == 0
         Admin.create(username:'系统管理员',login:'admin',password:'admin',password_confirmation:'admin',status:'1',auth:'region:user:deposit:takeout:card:relation:interest:regioncount:usercount:depositday:depositmonth:admin:interestversion:deposittypedef:relationdef:interestday:log:depositred:takeoutred')
@@ -31,12 +46,16 @@ class LoginsController < ApplicationController
           session[:username] = admin.username
           session[:id]=admin.id
           session[:auth]=admin.auth
-          redirect_to users_path
+          redirect_to regioncounts_path
         else
           redirect_to action: 'index',id:0
         end
       end
     end
+
+  def changebrowse
+
+  end
 
 
 

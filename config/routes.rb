@@ -50,7 +50,11 @@ Rails.application.routes.draw do
     end
   end
   resources :flogs
-  resources :logins
+  resources :logins do
+    collection do
+      get 'changebrowse'
+    end
+  end
   resources :settings do
     collection do
       get 'savemonthday'
@@ -68,4 +72,5 @@ Rails.application.routes.draw do
     end
   end
   resources :noauths
+  resources :tests
 end

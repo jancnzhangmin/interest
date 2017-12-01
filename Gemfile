@@ -10,6 +10,7 @@ gem "font-awesome-rails"
 gem 'rails_kindeditor'
 gem 'will_paginate-bootstrap'
 gem 'whenever', :require => false
+gem 'uuidtools'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.4'

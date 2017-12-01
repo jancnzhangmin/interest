@@ -32,61 +32,70 @@
     <div class="ibox-title">
       <h5>用户管理</h5>
       <div class="ibox-tools col-sm-3" style="margin-top: -5px;">
-      <div class="input-group">
-        <input type="text" id="search" placeholder="姓名或电话" class="input-sm form-control"> <span class="input-group-btn">
+        <div class="input-group">
+          <input type="text" id="search" placeholder="姓名或电话" class="input-sm form-control"> <span class="input-group-btn">
                                         <button type="button" id="searchbtn" class="btn btn-sm btn-primary"> 搜索</button> </span>
-      </div>
-      </div>
-    </div>
-    <div class="ibox-content">
-      <table class="table table-hover table-bordered text-center">
-        <thead>
-        <tr>
-          <th class="text-center">姓名</th>
-          <th class="text-center">性别</th>
-          <th class="text-center">地址</th>
-          <th class="text-center">电话</th>
-          <th class="text-center">日息分类</th>
-          <th class="text-center">资金</th>
-          <th class="text-center">操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% @userarr.each do |user| %>
-            <tr>
-              <td><%= user.username %></td>
-              <td><%= user.sex %></td>
-              <td>
-                <%= user.address %>
-              </td>
-              <td><%= user.tel %></td>
-
-              <td><%= user.interestversion %></td>
-              <td><%=sprintf("%.2f",user.capital) %></td>
-
-              <td>
-                <% if authen('deposit') %>
-                <%= link_to '存入',new_user_deposit_path(User.find(user.id)) %>
-                    <% end %>
-                <% if authen('takeout') %>
-                <%= link_to '转出',new_user_takeout_path(User.find(user.id)) %>
-                    <% end %>
-                <%= link_to '编辑',edit_user_path(User.find(user.id)) %>
-                <% if authen('deluser') %>
-                <%= link_to '删除', User.find(user.id), method: :delete, data: { confirm: '确认删除?' } %>
-                    <% end %>
-                <%= link_to '更多',user_path(User.find(user.id)) %>
-              </td>
-            </tr>
-        <% end %>
-        </tbody>
-      </table>
-      <%= link_to "新增",new_user_path,class: "btn btn-w-m btn-primary pull-right" %>
-      <br>
-      <div class="text-center">
-      <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+        </div>
       </div>
     </div>
+
+
+      <div class="ibox-content">
+
+
+        <table class="table table-hover table-bordered text-center">
+          <thead>
+          <tr>
+            <th class="text-center">姓名</th>
+            <th class="text-center">性别</th>
+            <th class="text-center">地址</th>
+            <th class="text-center">电话</th>
+            <th class="text-center">日息分类</th>
+            <th class="text-center">资金</th>
+            <th class="text-center">操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @userarr.each do |user| %>
+              <tr>
+                <td><%= user.username %></td>
+                <td><%= user.sex %></td>
+                <td>
+                  <%= user.address %>
+                </td>
+                <td><%= user.tel %></td>
+
+                <td><%= user.interestversion %></td>
+                <td><%=sprintf("%.2f",user.capital) %></td>
+
+                <td>
+                  <% if authen('deposit') %>
+                      <%= link_to '存入',new_user_deposit_path(User.find(user.id)) %>
+                  <% end %>
+                  <% if authen('takeout') %>
+                      <%= link_to '转出',new_user_takeout_path(User.find(user.id)) %>
+                  <% end %>
+                  <%= link_to '编辑',edit_user_path(User.find(user.id)) %>
+                  <% if authen('deluser') %>
+                      <%= link_to '删除', User.find(user.id), method: :delete, data: { confirm: '确认删除?' } %>
+                  <% end %>
+                  <%= link_to '更多',user_path(User.find(user.id)) %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+
+
+        <%= link_to "新增",new_user_path,class: "btn btn-w-m btn-primary pull-right" %>
+        <br>
+        <div class="text-center">
+          <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+        </div>
+    </div>
+
+
+
   </div>
 </div>
 <%=render 'layerend' %>

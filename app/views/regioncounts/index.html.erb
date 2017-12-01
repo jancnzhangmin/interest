@@ -29,6 +29,7 @@
             });
         });
 
+
         $('#chnodes').click(function(){
 
             if($('#chclainput').val()==''){
@@ -317,7 +318,7 @@
     function operateFormatter(value, row, index) {
         return [
             '<a class="edit" href="javascript:void(0)" title="编辑">',
-            '<i class="fa fa-pencil"></i>',
+            '更多',
             '</a>  '
         ].join('');
     }
@@ -328,7 +329,10 @@
   <div class="ibox float-e-margins">
     <div class="ibox-content col-md-12">
       <div class="ibox-title">
-        <h3>区域</h3>
+        <h5>用户</h5>
+        <div class="ibox-tools col-sm-1" style="margin-top: -5px;">
+          <%= link_to "新增",new_user_path,class: "btn btn-w-m btn-sm btn-primary pull-right" %>
+        </div>
       </div>
       <div class="ibox-content">
         <div class="col-md-8">

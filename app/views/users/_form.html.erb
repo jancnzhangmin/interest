@@ -265,6 +265,15 @@
             $('#sexm').iCheck('check');
         }
 
+        $('#smt').click(function(){
+           if($('#regionid').val()=='0' || $('#regionid').val()==''){
+               return false;
+           }
+            if($('#interestversion').val()=='0' || $('#interestversion').val()==''){
+                return false;
+            }
+        });
+
 
     });
 

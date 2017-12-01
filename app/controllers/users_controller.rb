@@ -11,7 +11,11 @@ class UsersController < ApplicationController
       usercla = Userclass.new
       usercla.id = f.id
       usercla.region_id=f.region_id
+      if f.interestversion
       usercla.interestversion = f.interestversion.name
+      else
+        usercla.interestversion =''
+        end
       usercla.username=f.username
       if f.sex == 0
         usercla.sex = '男'
@@ -59,7 +63,7 @@ class UsersController < ApplicationController
           @user.capital = 0
           @user.save
         end
-        format.html { redirect_to users_path, notice: 'User was successfully created.' }
+        format.html { redirect_to regioncounts_path, notice: 'User was successfully created.' }
       else
         format.html { render :new }
       end
@@ -70,7 +74,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         Flog.create(log:'编辑用户 '+@user.username,logtype:1,user:session[:username])
-        format.html { redirect_to users_path, notice: 'User was successfully updated.' }
+        format.html { redirect_to regioncounts_path, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -83,7 +87,7 @@ class UsersController < ApplicationController
     Flog.create(log:'删除用户 '+@user.username,logtype:1,user:session[:username])
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_path, notice: '删除成功' }
+      format.html { redirect_to regioncounts_path, notice: '删除成功' }
       format.json { head :no_content }
     end
   end
