@@ -13,6 +13,7 @@ class CardsController < ApplicationController
   def create
     @user = User.find(params[:user_id])
     @cards = @user.cards.new(card_params)
+    @cards.operator = session[:username]
     @cards.save
     Flog.create(log:'新增银行卡 '+@user.username+':'+@cards.bankaccount,logtype:1,user:session[:username])
     redirect_to user_cards_path(@user)

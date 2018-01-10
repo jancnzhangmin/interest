@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171126100630) do
+ActiveRecord::Schema.define(version: 20180110013032) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "username"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20171126100630) do
     t.string   "bankaccount"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "operator"
   end
 
   create_table "deposits", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -48,6 +49,8 @@ ActiveRecord::Schema.define(version: 20171126100630) do
     t.text     "content",           limit: 65535
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.string   "user"
+    t.string   "operator"
   end
 
   create_table "deposittypedefs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -117,6 +120,7 @@ ActiveRecord::Schema.define(version: 20171126100630) do
     t.string   "content"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "operator"
   end
 
   create_table "takeouts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -129,6 +133,7 @@ ActiveRecord::Schema.define(version: 20171126100630) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.integer  "card_id"
+    t.string   "operator"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -142,6 +147,7 @@ ActiveRecord::Schema.define(version: 20171126100630) do
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.float    "capital",            limit: 24
+    t.string   "user"
   end
 
 end

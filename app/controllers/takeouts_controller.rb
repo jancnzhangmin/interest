@@ -13,7 +13,9 @@ class TakeoutsController < ApplicationController
 
   def create
     @user = User.find(params[:user_id])
-    @takeout = @user.takeouts.create!(takeout_params)
+    @takeout = @user.takeouts.create(takeout_params)
+    @takeout.operator = session[:username]
+    @takeout.save
     @user.capital=@user.capital - takeout_params[:amount].to_f
     @user.save
     Flog.create(log:'新增取款 '+@user.username+':￥'+takeout_params[:amount],logtype:1,user:session[:username])

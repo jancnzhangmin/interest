@@ -13,6 +13,7 @@ class RegioncountsController < ApplicationController
     attr :tel,true
     attr :capital,true
     attr :interest,true
+    attr :user,true
   end
 
   class Regionlistclass
@@ -56,6 +57,7 @@ class RegioncountsController < ApplicationController
       usercla.interestversion = user.interestversion.name
       usercla.username = user.username
       usercla.interest = sprintf("%.2f",user.finterests.sum('amount'))
+      usercla.user = user.user
       if user.sex == 0
         usercla.sex = '男'
       else

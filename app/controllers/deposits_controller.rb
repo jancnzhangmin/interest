@@ -14,6 +14,9 @@ class DepositsController < ApplicationController
   def create
     @user = User.find(params[:user_id])
     @deposit = @user.deposits.create(deposit_params)
+    @deposit.operator = session[:username]
+@deposit.save
+
     @user.capital=@user.capital + deposit_params[:amount].to_f
     @user.save
     Flog.create(log:'新增存款 '+@user.username+':￥'+@deposit.amount.to_s,logtype:1,user:session[:username])

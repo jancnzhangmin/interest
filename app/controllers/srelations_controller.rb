@@ -19,6 +19,7 @@ class SrelationsController < ApplicationController
 
   def create
     @srelation = @user.srelations.new(srelation_params)
+    @srelation.operator = session[:username]
     respond_to do |format|
       if @srelation.save
         Flog.create(log:'新增社会关系 '+@user.username+':'+@srelation.name,logtype:1,user:session[:username])

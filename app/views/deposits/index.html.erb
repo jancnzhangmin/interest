@@ -12,6 +12,7 @@
           <th class="text-center">转入方式</th>
           <th class="text-center">金额</th>
           <th class="text-center">转入时间</th>
+          <th class="text-center">经手人</th>
           <th class="text-center">操作</th>
 
         </tr>
@@ -29,6 +30,9 @@
             <td><%= deposit.deposittypedef.depostitype %></td>
             <td><%= sprintf("%.2f",deposit.amount) %></td>
             <td><%= deposit.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+            <td>
+              <%= deposit.operator %>
+            </td>
             <td>
               <% if Deposit.where('ordernumber = ?',deposit.ordernumber).count == 1 && authen('depositred')%>
                   <%= link_to '红冲',redto_user_deposit_path(@user,deposit) %>

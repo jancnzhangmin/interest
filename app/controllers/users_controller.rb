@@ -58,6 +58,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
+        @user.user = session[:username]
+        @user.save
         Flog.create(log:'新增用户 '+@user.username,logtype:1,user:session[:username])
         if @user.capital.to_s ==''
           @user.capital = 0
@@ -110,6 +112,7 @@ class UsersController < ApplicationController
       userprocesscla.processtype='存入'
       userprocesscla.amount = sprintf("%.2f",deposit.amount)
       userprocesscla.time = deposit.created_at.strftime('%Y-%m-%d %H:%M:%S')
+      userprocesscla.user = deposit.operator
       @userprocessarr.push userprocesscla
     end
     takeouts = @user.takeouts
@@ -118,6 +121,7 @@ class UsersController < ApplicationController
       userprocesscla.processtype='取出'
       userprocesscla.amount = sprintf("%.2f",takeout.amount)
       userprocesscla.time = takeout.created_at.strftime('%Y-%m-%d %H:%M:%S')
+      userprocesscla.user = takeout.operator
       @userprocessarr.push userprocesscla
     end
     interestlogs = @user.interestlogs
@@ -142,6 +146,7 @@ class UsersController < ApplicationController
     attr :processtype,true
     attr :amount,true
     attr :time,true
+    attr :user,true
   end
 
   def getregion
